@@ -8,7 +8,6 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.core.content.res.use
 import androidx.core.math.MathUtils
-import androidx.core.view.doOnLayout
 
 /**
  * Created by HieuPT on 12/3/2020.
@@ -101,7 +100,7 @@ class StandaloneScrollBar : FrameLayout {
             thumbView.background = value
         }
 
-    var isAutoHide = true
+    var isAlwaysShown = false
 
     var delayBeforeAutoHide = AUTO_HIDE_SCROLLBAR_DELAY_MILLIS
 
@@ -155,7 +154,8 @@ class StandaloneScrollBar : FrameLayout {
                     0 -> Orientation.VERTICAL
                     else -> Orientation.HORIZONTAL
                 }
-            isAutoHide = it.getBoolean(R.styleable.StandaloneScrollBar_scrollbarAutoHide, true)
+            isAlwaysShown =
+                it.getBoolean(R.styleable.StandaloneScrollBar_scrollbarAlwaysShow, false)
             delayBeforeAutoHide = it.getInt(
                 R.styleable.StandaloneScrollBar_scrollbarDelayBeforeAutoHideDuration,
                 AUTO_HIDE_SCROLLBAR_DELAY_MILLIS.toInt()
@@ -170,13 +170,13 @@ class StandaloneScrollBar : FrameLayout {
             visibilityManager = FadeVisibilityManager()
             addView(trackView)
             addView(thumbView)
-            postAutoHideScrollbar()
+            autoHideScrollbar()
         }
     }
 
     private fun postAutoHideScrollbar() {
         cancelAutoHideScrollbar()
-        if (isAutoHide) {
+        if (!isAlwaysShown) {
             postDelayed(
                 autoHideScrollbarRunnable,
                 delayBeforeAutoHide
@@ -208,7 +208,9 @@ class StandaloneScrollBar : FrameLayout {
         this.scrollableView = scrollableView
         this.scrollableView.addOnScrollChangedListener(::onScrollChanged)
         this.scrollableView.addOnDraw(::onPreDraw)
-        postAutoHideScrollbar()
+        if (!isAlwaysShown) {
+            autoHideScrollbar()
+        }
     }
 
     fun scrollTo(offset: Int) = scrollableView.scrollTo(offset)
@@ -246,9 +248,7 @@ class StandaloneScrollBar : FrameLayout {
         if (caller === scrollableView) {
             updateScrollbarState()
             if (shouldShow) {
-                doOnLayout { orientationHelper.updateThumbOffsetLayout() }
-            } else {
-                DefaultVisibilityManager.hideScrollbar(trackView, thumbView, isLayoutRtl)
+                orientationHelper.updateThumbOffsetLayout()
             }
         }
     }

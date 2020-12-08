@@ -9,7 +9,7 @@
         <attr name="scrollbarThumbDrawable" format="reference" />
         <attr name="scrollbarThumbLength" format="dimension" />
         <attr name="scrollbarThumbLengthRatio" format="float" />
-        <attr name="scrollbarAutoHide" format="boolean" />
+        <attr name="scrollbarAlwaysShow" format="boolean" />
         <attr name="scrollbarDelayBeforeAutoHideDuration" format="integer" />
     </declare-styleable>
 </resources>
