@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".sample.ScrollViewActivity">
+
+    <com.hieupt.android.standalonescrollbar.view.HorizontalScrollView2
+        android:id="@+id/horizontalScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:text="@string/sample_data"
+                app:layout_constraintDimensionRatio="3:2"
+                app:layout_constraintStart_toStartOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.hieupt.android.standalonescrollbar.view.HorizontalScrollView2>
+
+    <com.hieupt.android.standalonescrollbar.StandaloneScrollBar
+        android:id="@+id/verticalScrollbar"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:scrollbarOrientation="vertical" />
+
+    <com.hieupt.android.standalonescrollbar.StandaloneScrollBar
+        android:id="@+id/horizontalScrollbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:scrollbarOrientation="horizontal" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

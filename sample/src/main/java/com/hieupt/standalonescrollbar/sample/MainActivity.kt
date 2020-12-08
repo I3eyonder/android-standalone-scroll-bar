@@ -16,25 +16,16 @@ class MainActivity : AppCompatActivity() {
         menuRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = MenuAdapter {
-                val intent = when (it) {
-                    MenuAdapter.Menu.VERTICAL_RECYCLER_VIEW -> Intent(
-                        this@MainActivity,
-                        VerticalRecyclerViewActivity::class.java
-                    )
-                    MenuAdapter.Menu.HORIZONTAL_RECYCLER_VIEW -> Intent(
-                        this@MainActivity,
-                        HorizontalRecyclerViewActivity::class.java
-                    )
-                    MenuAdapter.Menu.VERTICAL_GRID_RECYCLER_VIEW -> Intent(
-                        this@MainActivity,
-                        VerticalGridRecyclerViewActivity::class.java
-                    )
-                    MenuAdapter.Menu.HORIZONTAL_GRID_RECYCLER_VIEW -> Intent(
-                        this@MainActivity,
-                        HorizontalGridRecyclerViewActivity::class.java
-                    )
+                val clazz = when (it) {
+                    MenuAdapter.Menu.VERTICAL_RECYCLER_VIEW -> VerticalRecyclerViewActivity::class.java
+                    MenuAdapter.Menu.HORIZONTAL_RECYCLER_VIEW -> HorizontalRecyclerViewActivity::class.java
+                    MenuAdapter.Menu.VERTICAL_GRID_RECYCLER_VIEW -> VerticalGridRecyclerViewActivity::class.java
+                    MenuAdapter.Menu.HORIZONTAL_GRID_RECYCLER_VIEW -> HorizontalGridRecyclerViewActivity::class.java
+                    MenuAdapter.Menu.NESTED_SCROLL_VIEW -> NestedScrollViewActivity::class.java
+                    MenuAdapter.Menu.SCROLL_VIEW -> ScrollViewActivity::class.java
+                    MenuAdapter.Menu.HORIZONTAL_SCROLL_VIEW -> HorizontalScrollViewActivity::class.java
                 }
-                startActivity(intent)
+                startActivity(Intent(this@MainActivity, clazz))
             }
         }
         verticalScrollbar.apply {

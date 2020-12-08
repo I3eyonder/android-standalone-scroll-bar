@@ -42,5 +42,8 @@ class MenuAdapter(
         HORIZONTAL_RECYCLER_VIEW("Horizontal Recycler View"),
         VERTICAL_GRID_RECYCLER_VIEW("Vertical Grid Recycler View"),
         HORIZONTAL_GRID_RECYCLER_VIEW("Horizontal Grid Recycler View"),
+        NESTED_SCROLL_VIEW("Nested Scroll View"),
+        SCROLL_VIEW("Scroll View"),
+        HORIZONTAL_SCROLL_VIEW("Horizontal Scroll View"),
     }
 }

@@ -9,6 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.StandaloneScrollBarSample">
+        <activity android:name=".sample.NestedScrollViewActivity" />
+        <activity android:name=".sample.HorizontalScrollViewActivity" />
+        <activity android:name=".sample.ScrollViewActivity" />
         <activity android:name=".sample.HorizontalGridRecyclerViewActivity" />
         <activity android:name=".sample.VerticalGridRecyclerViewActivity" />
         <activity android:name=".sample.HorizontalRecyclerViewActivity" />

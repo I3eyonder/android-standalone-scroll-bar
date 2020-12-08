@@ -3,8 +3,10 @@ package com.hieupt.android.standalonescrollbar
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.hieupt.android.standalonescrollbar.viewhelper.HorizontalRecyclerViewHelper
-import com.hieupt.android.standalonescrollbar.viewhelper.VerticalRecyclerViewHelper
+import com.hieupt.android.standalonescrollbar.view.HorizontalScrollView2
+import com.hieupt.android.standalonescrollbar.view.NestedScrollView2
+import com.hieupt.android.standalonescrollbar.view.ScrollView2
+import com.hieupt.android.standalonescrollbar.viewhelper.*
 
 val View.isLayoutRtl: Boolean
     get() = layoutDirection == View.LAYOUT_DIRECTION_RTL
@@ -28,4 +30,16 @@ fun StandaloneScrollBar.attachTo(recyclerView: RecyclerView) {
     } else {
         throw IllegalArgumentException("LayoutManager must be instance of LinearLayoutManager and have to be set before attach with StandaloneScrollBar")
     }
+}
+
+fun StandaloneScrollBar.attachTo(scrollView: NestedScrollView2) {
+    attachTo(VerticalNestedScrollViewHelper(scrollView))
+}
+
+fun StandaloneScrollBar.attachTo(scrollView: ScrollView2) {
+    attachTo(VerticalScrollViewHelper(scrollView))
+}
+
+fun StandaloneScrollBar.attachTo(scrollView: HorizontalScrollView2) {
+    attachTo(HorizontalScrollViewHelper(scrollView))
 }
