@@ -9,10 +9,6 @@ import android.widget.FrameLayout
 import androidx.core.content.res.use
 import androidx.core.math.MathUtils
 import androidx.core.view.doOnLayout
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.hieupt.android.standalonescrollbar.viewhelper.HorizontalRecyclerViewHelper
-import com.hieupt.android.standalonescrollbar.viewhelper.VerticalRecyclerViewHelper
 
 /**
  * Created by HieuPT on 12/3/2020.
@@ -213,18 +209,6 @@ class StandaloneScrollBar : FrameLayout {
         this.scrollableView.addOnScrollChangedListener(::onScrollChanged)
         this.scrollableView.addOnDraw(::onPreDraw)
         postAutoHideScrollbar()
-    }
-
-    fun attachTo(recyclerView: RecyclerView) {
-        val layoutManager = recyclerView.layoutManager
-        if (layoutManager is LinearLayoutManager) {
-            when (layoutManager.orientation) {
-                RecyclerView.VERTICAL -> attachTo(VerticalRecyclerViewHelper(recyclerView))
-                RecyclerView.HORIZONTAL -> attachTo(HorizontalRecyclerViewHelper(recyclerView))
-            }
-        } else {
-            throw IllegalArgumentException("LayoutManager must be instance of LinearLayoutManager and have to be set before attach with StandaloneScrollBar")
-        }
     }
 
     fun scrollTo(offset: Int) = scrollableView.scrollTo(offset)

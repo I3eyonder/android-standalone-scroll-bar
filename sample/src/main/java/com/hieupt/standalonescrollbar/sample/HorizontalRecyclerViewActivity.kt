@@ -3,6 +3,7 @@ package com.hieupt.standalonescrollbar.sample
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.hieupt.android.standalonescrollbar.attachTo
 import com.hieupt.standalonescrollbar.R
 import kotlinx.android.synthetic.main.activity_horizontal_recycler_view.*
 
