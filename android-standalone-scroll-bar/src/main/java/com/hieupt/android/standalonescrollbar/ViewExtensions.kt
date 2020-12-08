@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hieupt.android.standalonescrollbar.view.HorizontalScrollView2
 import com.hieupt.android.standalonescrollbar.view.NestedScrollView2
 import com.hieupt.android.standalonescrollbar.view.ScrollView2
+import com.hieupt.android.standalonescrollbar.view.WebView2
 import com.hieupt.android.standalonescrollbar.viewhelper.*
 
 val View.isLayoutRtl: Boolean
@@ -42,4 +43,11 @@ fun StandaloneScrollBar.attachTo(scrollView: ScrollView2) {
 
 fun StandaloneScrollBar.attachTo(scrollView: HorizontalScrollView2) {
     attachTo(HorizontalScrollViewHelper(scrollView))
+}
+
+fun StandaloneScrollBar.attachTo(webView: WebView2, orientation: StandaloneScrollBar.Orientation) {
+    when (orientation) {
+        StandaloneScrollBar.Orientation.VERTICAL -> attachTo(VerticalWebViewViewHelper(webView))
+        StandaloneScrollBar.Orientation.HORIZONTAL -> attachTo(HorizontalWebViewViewHelper(webView))
+    }
 }

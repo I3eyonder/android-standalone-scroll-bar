@@ -45,5 +45,6 @@ class MenuAdapter(
         NESTED_SCROLL_VIEW("Nested Scroll View"),
         SCROLL_VIEW("Scroll View"),
         HORIZONTAL_SCROLL_VIEW("Horizontal Scroll View"),
+        WEB_VIEW("Web View"),
     }
 }

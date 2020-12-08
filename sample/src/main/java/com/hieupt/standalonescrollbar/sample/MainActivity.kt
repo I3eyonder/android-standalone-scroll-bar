@@ -24,6 +24,7 @@ class MainActivity : AppCompatActivity() {
                     MenuAdapter.Menu.NESTED_SCROLL_VIEW -> NestedScrollViewActivity::class.java
                     MenuAdapter.Menu.SCROLL_VIEW -> ScrollViewActivity::class.java
                     MenuAdapter.Menu.HORIZONTAL_SCROLL_VIEW -> HorizontalScrollViewActivity::class.java
+                    MenuAdapter.Menu.WEB_VIEW -> WebViewActivity::class.java
                 }
                 startActivity(Intent(this@MainActivity, clazz))
             }
