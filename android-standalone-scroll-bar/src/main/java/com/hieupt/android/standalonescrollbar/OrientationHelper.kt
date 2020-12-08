@@ -32,8 +32,19 @@ internal sealed class OrientationHelper(internal val scrollBar: StandaloneScroll
     private fun updateBackground(trackView: View, thumbView: View) {
         trackView.background =
             scrollBar.customTrackDrawable ?: defaultTrackDrawable
+        if (scrollBar.customTrackDrawable == null) {
+            scrollBar.defaultTrackTint?.let {
+                trackView.backgroundTintList = it
+            }
+        }
+
         thumbView.background =
             scrollBar.customThumbDrawable ?: defaultThumbDrawable
+        if (scrollBar.customThumbDrawable == null) {
+            scrollBar.defaultThumbTint?.let {
+                thumbView.backgroundTintList = it
+            }
+        }
     }
 
     internal abstract val defaultTrackDrawable: Drawable?

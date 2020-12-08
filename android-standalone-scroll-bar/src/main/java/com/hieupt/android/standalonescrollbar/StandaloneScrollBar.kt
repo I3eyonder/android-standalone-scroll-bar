@@ -1,6 +1,7 @@
 package com.hieupt.android.standalonescrollbar
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -23,6 +24,10 @@ class StandaloneScrollBar : FrameLayout {
     private var _customTrackDrawable: Drawable? = null
 
     private var _customThumbDrawable: Drawable? = null
+
+    private var _defaultTrackTint: ColorStateList? = null
+
+    private var _defaultThumbTint: ColorStateList? = null
 
     private var _orientation = Orientation.VERTICAL
 
@@ -100,6 +105,26 @@ class StandaloneScrollBar : FrameLayout {
             thumbView.background = value
         }
 
+    var defaultTrackTint: ColorStateList?
+        get() = _defaultTrackTint
+        set(value) {
+            _defaultTrackTint = value
+            if (_customTrackDrawable == null) {
+                trackView.backgroundTintList = value
+            }
+        }
+
+    var defaultThumbTint: ColorStateList?
+        get() = _defaultThumbTint
+        set(value) {
+            _defaultThumbTint = value
+            if (_customThumbDrawable == null) {
+                thumbView.backgroundTintList = value
+            }
+        }
+
+    var draggable = true
+
     var isAlwaysShown = false
 
     var delayBeforeAutoHide = AUTO_HIDE_SCROLLBAR_DELAY_MILLIS
@@ -149,6 +174,10 @@ class StandaloneScrollBar : FrameLayout {
                 it.getDrawable(R.styleable.StandaloneScrollBar_scrollbarTrackDrawable)
             _customThumbDrawable =
                 it.getDrawable(R.styleable.StandaloneScrollBar_scrollbarThumbDrawable)
+            _defaultTrackTint =
+                it.getColorStateList(R.styleable.StandaloneScrollBar_scrollbarDefaultTrackTint)
+            _defaultThumbTint =
+                it.getColorStateList(R.styleable.StandaloneScrollBar_scrollbarDefaultThumbTint)
             orientation =
                 when (it.getInt(R.styleable.StandaloneScrollBar_scrollbarOrientation, 0)) {
                     0 -> Orientation.VERTICAL
@@ -166,6 +195,7 @@ class StandaloneScrollBar : FrameLayout {
             )
             _thumbLengthRatio =
                 it.getFloat(R.styleable.StandaloneScrollBar_scrollbarThumbLengthRatio, Float.NaN)
+            draggable = it.getBoolean(R.styleable.StandaloneScrollBar_scrollbarDraggable, true)
 
             visibilityManager = FadeVisibilityManager()
             addView(trackView)
@@ -262,7 +292,7 @@ class StandaloneScrollBar : FrameLayout {
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        return orientationHelper.onTouchEvent(event)
+        return if (draggable) orientationHelper.onTouchEvent(event) else false
     }
 
     enum class Orientation {

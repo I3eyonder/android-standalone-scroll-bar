@@ -11,5 +11,8 @@
         <attr name="scrollbarThumbLengthRatio" format="float" />
         <attr name="scrollbarAlwaysShow" format="boolean" />
         <attr name="scrollbarDelayBeforeAutoHideDuration" format="integer" />
+        <attr name="scrollbarDraggable" format="boolean" />
+        <attr name="scrollbarDefaultTrackTint" format="reference|color" />
+        <attr name="scrollbarDefaultThumbTint" format="reference|color" />
     </declare-styleable>
 </resources>
