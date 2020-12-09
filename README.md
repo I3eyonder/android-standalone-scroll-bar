@@ -48,10 +48,11 @@ scrollbar.customThumbDrawable = customDrawable
 scrollbar.defaultThumbTint = ColorStateList()
 scrollbar.defaultTrackTint = ColorStateList()
 ```
-- Custom thumb length by using attribute `scrollbarThumbLength`/`scrollbarThumbLengthRatio`
+- Custom thumb length by using attribute `scrollbarThumbLength`|`scrollbarThumbLengthByTrackRatio`|`scrollbarMinThumbLength`
 ```kotlin
 scrollbar.thumbLength = desireLengthInPx
-scrollbar.thumbLengthRatio = percentOfTrackLength //[0.0..1.0]
+scrollbar.thumbLengthByTrackRatio = percentOfTrackLength //[0.0..1.0]
+scrollbar.minThumbLength = desireLengthInPx
 ```
 - Enable/Disable thumb bar drag ability using attribute `scrollbarDraggable`
 ```

@@ -9,6 +9,7 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.core.content.res.use
 import androidx.core.math.MathUtils
+import kotlin.math.max
 
 /**
  * Created by HieuPT on 12/3/2020.
@@ -31,9 +32,11 @@ class StandaloneScrollBar : FrameLayout {
 
     private var _orientation = Orientation.VERTICAL
 
+    private var _minThumbLength = 0
+
     private var _thumbLength = Int.MIN_VALUE
 
-    private var _thumbLengthRatio = Float.NaN
+    private var _thumbLengthByTrackRatio = Float.NaN
 
     lateinit var scrollableView: ScrollableView
 
@@ -129,6 +132,14 @@ class StandaloneScrollBar : FrameLayout {
 
     var delayBeforeAutoHide = AUTO_HIDE_SCROLLBAR_DELAY_MILLIS
 
+    var minThumbLength: Int
+        get() = _minThumbLength
+        set(value) {
+            val min = max(value, 0)
+            _minThumbLength = min
+            requestLayout()
+        }
+
     var thumbLength: Int
         get() = _thumbLength
         set(value) {
@@ -138,11 +149,11 @@ class StandaloneScrollBar : FrameLayout {
             }
         }
 
-    var thumbLengthRatio: Float
-        get() = _thumbLengthRatio
+    var thumbLengthByTrackRatio: Float
+        get() = _thumbLengthByTrackRatio
         set(value) {
-            if (value != _thumbLengthRatio) {
-                _thumbLengthRatio = value
+            if (value != _thumbLengthByTrackRatio) {
+                _thumbLengthByTrackRatio = value
                 requestLayout()
             }
         }
@@ -189,12 +200,17 @@ class StandaloneScrollBar : FrameLayout {
                 R.styleable.StandaloneScrollBar_scrollbarDelayBeforeAutoHideDuration,
                 AUTO_HIDE_SCROLLBAR_DELAY_MILLIS.toInt()
             ).toLong()
+            _minThumbLength =
+                it.getDimensionPixelSize(R.styleable.StandaloneScrollBar_scrollbarMinThumbLength, 0)
             _thumbLength = it.getDimensionPixelSize(
                 R.styleable.StandaloneScrollBar_scrollbarThumbLength,
                 Int.MIN_VALUE
             )
-            _thumbLengthRatio =
-                it.getFloat(R.styleable.StandaloneScrollBar_scrollbarThumbLengthRatio, Float.NaN)
+            _thumbLengthByTrackRatio =
+                it.getFloat(
+                    R.styleable.StandaloneScrollBar_scrollbarThumbLengthByTrackRatio,
+                    Float.NaN
+                )
             draggable = it.getBoolean(R.styleable.StandaloneScrollBar_scrollbarDraggable, true)
 
             visibilityManager = FadeVisibilityManager()
@@ -285,7 +301,7 @@ class StandaloneScrollBar : FrameLayout {
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        if (thumbLength >= 0 || thumbLengthRatio >= 0) {
+        if (thumbLength >= 0 || thumbLengthByTrackRatio >= 0 || minThumbLength > 0) {
             val (thumbWidthMeasureSpec, thumbHeightMeasureSpec) = orientationHelper.getThumbMeasureSpec()
             thumbView.measure(thumbWidthMeasureSpec, thumbHeightMeasureSpec)
         }

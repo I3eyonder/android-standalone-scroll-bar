@@ -8,8 +8,8 @@ import android.view.View
 import android.view.ViewConfiguration
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
+import androidx.core.math.MathUtils
 import kotlin.math.abs
-import kotlin.math.min
 
 internal sealed class OrientationHelper(internal val scrollBar: StandaloneScrollBar) {
 
@@ -113,19 +113,25 @@ internal sealed class OrientationHelper(internal val scrollBar: StandaloneScroll
             )
             val thumbHeightMeasureSpec = when {
                 scrollBar.thumbLength >= 0 -> View.MeasureSpec.makeMeasureSpec(
-                    min(
+                    MathUtils.clamp(
                         scrollBar.thumbLength,
+                        scrollBar.minThumbLength,
                         scrollBar.trackView.measuredHeight
                     ), View.MeasureSpec.EXACTLY
                 )
-                scrollBar.thumbLengthRatio >= 0 -> View.MeasureSpec.makeMeasureSpec(
-                    min(
-                        (scrollBar.trackView.measuredHeight * scrollBar.thumbLengthRatio).toInt(),
+                scrollBar.thumbLengthByTrackRatio >= 0 -> View.MeasureSpec.makeMeasureSpec(
+                    MathUtils.clamp(
+                        (scrollBar.trackView.measuredHeight * scrollBar.thumbLengthByTrackRatio).toInt(),
+                        scrollBar.minThumbLength,
                         scrollBar.trackView.measuredHeight
                     ), View.MeasureSpec.EXACTLY
                 )
                 else -> View.MeasureSpec.makeMeasureSpec(
-                    scrollBar.thumbView.measuredHeight,
+                    MathUtils.clamp(
+                        scrollBar.thumbView.measuredHeight,
+                        scrollBar.minThumbLength,
+                        scrollBar.trackView.measuredHeight
+                    ),
                     View.MeasureSpec.EXACTLY
                 )
             }
@@ -266,19 +272,25 @@ internal sealed class OrientationHelper(internal val scrollBar: StandaloneScroll
         override fun getThumbMeasureSpec(): Pair<Int, Int> {
             val thumbWidthMeasureSpec = when {
                 scrollBar.thumbLength >= 0 -> View.MeasureSpec.makeMeasureSpec(
-                    min(
+                    MathUtils.clamp(
                         scrollBar.thumbLength,
+                        scrollBar.minThumbLength,
                         scrollBar.trackView.measuredWidth
                     ), View.MeasureSpec.EXACTLY
                 )
-                scrollBar.thumbLengthRatio >= 0 -> View.MeasureSpec.makeMeasureSpec(
-                    min(
-                        (scrollBar.trackView.measuredWidth * scrollBar.thumbLengthRatio).toInt(),
+                scrollBar.thumbLengthByTrackRatio >= 0 -> View.MeasureSpec.makeMeasureSpec(
+                    MathUtils.clamp(
+                        (scrollBar.trackView.measuredWidth * scrollBar.thumbLengthByTrackRatio).toInt(),
+                        scrollBar.minThumbLength,
                         scrollBar.trackView.measuredWidth
                     ), View.MeasureSpec.EXACTLY
                 )
                 else -> View.MeasureSpec.makeMeasureSpec(
-                    scrollBar.thumbView.measuredWidth,
+                    MathUtils.clamp(
+                        scrollBar.thumbView.measuredWidth,
+                        scrollBar.minThumbLength,
+                        scrollBar.trackView.measuredWidth
+                    ),
                     View.MeasureSpec.EXACTLY
                 )
             }
