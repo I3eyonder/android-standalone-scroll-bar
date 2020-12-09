@@ -10,7 +10,7 @@
         <attr name="scrollbarMinThumbLength" format="dimension" />
         <attr name="scrollbarThumbLength" format="dimension" />
         <attr name="scrollbarThumbLengthByTrackRatio" format="float" />
-        <attr name="scrollbarThumbLengthByScrollRangeRatio" format="float" />
+        <attr name="scrollbarAutoThumbLength" format="boolean" />
         <attr name="scrollbarAlwaysShow" format="boolean" />
         <attr name="scrollbarDelayBeforeAutoHideDuration" format="integer" />
         <attr name="scrollbarDraggable" format="boolean" />

@@ -7,8 +7,11 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.widget.FrameLayout
+import androidx.annotation.DrawableRes
+import androidx.core.content.ContextCompat
 import androidx.core.content.res.use
 import androidx.core.math.MathUtils
+import androidx.core.view.doOnLayout
 import kotlin.math.max
 
 /**
@@ -21,6 +24,13 @@ class StandaloneScrollBar : FrameLayout {
     private val autoHideScrollbarRunnable by lazy { Runnable { autoHideScrollbar() } }
 
     private var thumbOffset = 0
+
+    private var lastScrollRange = Int.MIN_VALUE
+
+    private var lastScrollOffsetRange = Int.MIN_VALUE
+
+    private val isLayoutDirty: Boolean
+        get() = lastScrollRange != scrollableView.scrollRange || lastScrollOffsetRange != scrollableView.scrollOffsetRange
 
     private var _customTrackDrawable: Drawable? = null
 
@@ -136,8 +146,10 @@ class StandaloneScrollBar : FrameLayout {
         get() = _minThumbLength
         set(value) {
             val min = max(value, 0)
-            _minThumbLength = min
-            requestLayout()
+            if (min != _minThumbLength) {
+                _minThumbLength = min
+                requestLayout()
+            }
         }
 
     var thumbLength: Int
@@ -157,6 +169,8 @@ class StandaloneScrollBar : FrameLayout {
                 requestLayout()
             }
         }
+
+    var autoThumbLength: Boolean = false
 
     constructor(context: Context) : super(context) {
         init()
@@ -211,6 +225,8 @@ class StandaloneScrollBar : FrameLayout {
                     R.styleable.StandaloneScrollBar_scrollbarThumbLengthByTrackRatio,
                     Float.NaN
                 )
+            autoThumbLength =
+                it.getBoolean(R.styleable.StandaloneScrollBar_scrollbarAutoThumbLength, false)
             draggable = it.getBoolean(R.styleable.StandaloneScrollBar_scrollbarDraggable, true)
 
             visibilityManager = FadeVisibilityManager()
@@ -261,6 +277,14 @@ class StandaloneScrollBar : FrameLayout {
 
     fun scrollTo(offset: Int) = scrollableView.scrollTo(offset)
 
+    fun setCustomTrackDrawableResource(@DrawableRes resId: Int) {
+        customTrackDrawable = ContextCompat.getDrawable(context, resId)
+    }
+
+    fun setCustomThumbDrawableResource(@DrawableRes resId: Int) {
+        customThumbDrawable = ContextCompat.getDrawable(context, resId)
+    }
+
     internal fun getThumbOffset(): Int = thumbOffset
 
     internal fun scrollToThumbOffset(thumbOffset: Int) {
@@ -292,16 +316,21 @@ class StandaloneScrollBar : FrameLayout {
 
     private fun onPreDraw(caller: ScrollableView) {
         if (caller === scrollableView) {
+            if (autoThumbLength && isLayoutDirty) {
+                requestLayout()
+            }
+            lastScrollRange = scrollableView.scrollRange
+            lastScrollOffsetRange = scrollableView.scrollOffsetRange
             updateScrollbarState()
             if (shouldShow) {
-                orientationHelper.updateThumbOffsetLayout()
+                doOnLayout { orientationHelper.updateThumbOffsetLayout() }
             }
         }
     }
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        if (thumbLength >= 0 || thumbLengthByTrackRatio >= 0 || minThumbLength > 0) {
+        if (thumbLength >= 0 || thumbLengthByTrackRatio >= 0 || autoThumbLength || minThumbLength > 0) {
             val (thumbWidthMeasureSpec, thumbHeightMeasureSpec) = orientationHelper.getThumbMeasureSpec()
             thumbView.measure(thumbWidthMeasureSpec, thumbHeightMeasureSpec)
         }

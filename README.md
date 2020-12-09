@@ -48,21 +48,22 @@ scrollbar.customThumbDrawable = customDrawable
 scrollbar.defaultThumbTint = ColorStateList()
 scrollbar.defaultTrackTint = ColorStateList()
 ```
-- Custom thumb length by using attribute `scrollbarThumbLength`|`scrollbarThumbLengthByTrackRatio`|`scrollbarMinThumbLength`
+- Custom thumb length by using attribute `scrollbarThumbLength`|`scrollbarThumbLengthByTrackRatio`|`scrollbarMinThumbLength`|`scrollbarAutoThumbLength`. If multi attributes is set, the priorities order will be `scrollbarThumbLength` > `scrollbarThumbLengthByTrackRatio` > `scrollbarAutoThumbLength`
 ```kotlin
 scrollbar.thumbLength = desireLengthInPx
 scrollbar.thumbLengthByTrackRatio = percentOfTrackLength //[0.0..1.0]
 scrollbar.minThumbLength = desireLengthInPx
+scrollbar.autoThumbLength = true|false
 ```
 - Enable/Disable thumb bar drag ability using attribute `scrollbarDraggable`
-```
-scrollbar.draggable= true|false
+```kotlin
+scrollbar.draggable = true|false
 ```
 - Auto hide ability (attribute `scrollbarAlwaysShow`)
-```
-scrollbar.isAlwaysShown= true|false
+```kotlin
+scrollbar.isAlwaysShown = true|false
 ```
 - Delay duration before scrollbar auto hide (attribute `scrollbarDelayBeforeAutoHideDuration`)
-```
+```kotlin
 scrollbar.delayBeforeAutoHide = delayTimeInMillis
 ```
