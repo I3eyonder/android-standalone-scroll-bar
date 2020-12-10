@@ -3,7 +3,7 @@
 
 ### Gradle:
 ```gradle
-implementation 'com.dev.hieupt:android-standalone-scroll-bar:1.1.0'
+implementation 'com.dev.hieupt:android-standalone-scroll-bar:1.1.1'
 ```
 
 ## Usage
