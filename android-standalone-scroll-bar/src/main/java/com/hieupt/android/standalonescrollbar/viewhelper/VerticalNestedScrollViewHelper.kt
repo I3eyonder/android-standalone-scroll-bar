@@ -1,6 +1,7 @@
 package com.hieupt.android.standalonescrollbar.viewhelper
 
 import com.hieupt.android.standalonescrollbar.ScrollableView
+import com.hieupt.android.standalonescrollbar.VerticalScrollableView
 import com.hieupt.android.standalonescrollbar.view.NestedScrollView2
 
 /**
@@ -8,7 +9,7 @@ import com.hieupt.android.standalonescrollbar.view.NestedScrollView2
  */
 internal class VerticalNestedScrollViewHelper(
     private val scrollView: NestedScrollView2
-) : ScrollableView {
+) : VerticalScrollableView {
 
     override val viewWidth: Int
         get() = scrollView.width
@@ -21,9 +22,6 @@ internal class VerticalNestedScrollViewHelper(
 
     override val scrollOffset: Int
         get() = scrollView.calculateVerticalScrollOffset()
-
-    override val scrollOffsetRange: Int
-        get() = scrollRange - viewHeight
 
     override fun addOnScrollChangedListener(onScrollChanged: (caller: ScrollableView) -> Unit) {
         scrollView.addOnScrollListener { _, _, _, _ ->

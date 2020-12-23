@@ -1,6 +1,7 @@
 package com.hieupt.android.standalonescrollbar.viewhelper
 
 import com.hieupt.android.standalonescrollbar.ScrollableView
+import com.hieupt.android.standalonescrollbar.VerticalScrollableView
 import com.hieupt.android.standalonescrollbar.view.WebView2
 
 /**
@@ -8,7 +9,7 @@ import com.hieupt.android.standalonescrollbar.view.WebView2
  */
 internal class VerticalWebViewViewHelper(
     private val webView: WebView2
-) : ScrollableView {
+) : VerticalScrollableView {
 
     override val viewWidth: Int
         get() = webView.width
@@ -21,9 +22,6 @@ internal class VerticalWebViewViewHelper(
 
     override val scrollOffset: Int
         get() = webView.calculateVerticalScrollOffset()
-
-    override val scrollOffsetRange: Int
-        get() = scrollRange - viewHeight
 
     override fun addOnScrollChangedListener(onScrollChanged: (caller: ScrollableView) -> Unit) {
         webView.addOnScrollListener { _, _, _, _ ->

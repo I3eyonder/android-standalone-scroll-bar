@@ -6,12 +6,13 @@ import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.hieupt.android.standalonescrollbar.HorizontalScrollableView
 import com.hieupt.android.standalonescrollbar.ScrollableView
 import kotlin.math.max
 
 internal class HorizontalRecyclerViewHelper(
     private val view: RecyclerView
-) : ScrollableView {
+) : HorizontalScrollableView {
 
     private val isLayoutRtl: Boolean
         get() = view.layoutDirection == View.LAYOUT_DIRECTION_RTL
@@ -66,9 +67,6 @@ internal class HorizontalRecyclerViewHelper(
                 view.paddingStart + firstItemPosition * itemWidth - firstItemStart
             }
         }
-
-    override val scrollOffsetRange: Int
-        get() = scrollRange - viewWidth
 
     override fun scrollTo(offset: Int) {
         // Stop any scroll in progress for RecyclerView.

@@ -6,11 +6,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hieupt.android.standalonescrollbar.ScrollableView
+import com.hieupt.android.standalonescrollbar.VerticalScrollableView
 import kotlin.math.max
 
 internal class VerticalRecyclerViewHelper(
     private val view: RecyclerView
-) : ScrollableView {
+) : VerticalScrollableView {
 
     private val tempRect = Rect()
 
@@ -59,9 +60,6 @@ internal class VerticalRecyclerViewHelper(
             val firstItemTop = firstItemOffset
             return view.paddingTop + firstItemPosition * itemHeight - firstItemTop
         }
-
-    override val scrollOffsetRange: Int
-        get() = scrollRange - viewHeight
 
     override fun scrollTo(offset: Int) {
         // Stop any scroll in progress for RecyclerView.
