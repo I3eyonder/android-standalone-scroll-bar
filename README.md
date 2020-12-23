@@ -3,7 +3,7 @@
 
 ### Gradle:
 ```gradle
-implementation 'com.dev.hieupt:android-standalone-scroll-bar:1.1.1'
+implementation 'com.dev.hieupt:android-standalone-scroll-bar:1.1.2'
 ```
 
 ## Usage
@@ -28,7 +28,7 @@ To using with [`NestedScrollView`, `ScrollView`, `HorizontalScrollView`, `WebVie
 ```kotlin
 scrollbar.attachTo(nestedScrollView2)
 ```
-You can also implement your own [`ScrollableView`](https://github.com/hieupham1993/android-standalone-scroll-bar/blob/master/android-standalone-scroll-bar/src/main/java/com/hieupt/android/standalonescrollbar/ScrollableView.kt) to use [`StandaloneScrollBar`](https://github.com/hieupham1993/android-standalone-scroll-bar/blob/master/android-standalone-scroll-bar/src/main/java/com/hieupt/android/standalonescrollbar/StandaloneScrollBar.kt) with any `View`. You can refer [`VerticalScrollViewHelper`](https://github.com/hieupham1993/android-standalone-scroll-bar/blob/master/android-standalone-scroll-bar/src/main/java/com/hieupt/android/standalonescrollbar/viewhelper/VerticalScrollViewHelper.kt) for example of implementation.
+You can also implement your own [`ScrollableView`](https://github.com/hieupham1993/android-standalone-scroll-bar/blob/master/android-standalone-scroll-bar/src/main/java/com/hieupt/android/standalonescrollbar/ScrollableView.kt) to use [`StandaloneScrollBar`](https://github.com/hieupham1993/android-standalone-scroll-bar/blob/master/android-standalone-scroll-bar/src/main/java/com/hieupt/android/standalonescrollbar/StandaloneScrollBar.kt) with any `View`. You can refer [`VerticalScrollViewHelper`](https://github.com/hieupham1993/android-standalone-scroll-bar/blob/master/android-standalone-scroll-bar/src/main/java/com/hieupt/android/standalonescrollbar/viewhelper/VerticalScrollViewHelper.kt) or [`HorizontalScrollViewHelper`](https://github.com/hieupham1993/android-standalone-scroll-bar/blob/master/android-standalone-scroll-bar/src/main/java/com/hieupt/android/standalonescrollbar/viewhelper/HorizontalScrollViewHelper.kt) for example of implementation.
 ```kotlin
 scrollbar.attachTo(scrollableView)
 ```
