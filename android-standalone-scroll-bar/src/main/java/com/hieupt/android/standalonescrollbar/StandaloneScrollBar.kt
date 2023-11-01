@@ -42,6 +42,8 @@ class StandaloneScrollBar : FrameLayout {
 
     private var _orientation = Orientation.VERTICAL
 
+    private var _isAlwaysShown = false
+
     private var _minThumbLength = 0
 
     private var _thumbLength = Int.MIN_VALUE
@@ -138,7 +140,19 @@ class StandaloneScrollBar : FrameLayout {
 
     var draggable = true
 
-    var isAlwaysShown = false
+    var isAlwaysShown: Boolean
+        get() = _isAlwaysShown
+        set(value) {
+            if (_isAlwaysShown != value) {
+                _isAlwaysShown = value
+                if (value) {
+                    cancelAutoHideScrollbar()
+                    showScrollbar()
+                } else {
+                    postAutoHideScrollbar()
+                }
+            }
+        }
 
     var delayBeforeAutoHide = AUTO_HIDE_SCROLLBAR_DELAY_MILLIS
 
@@ -208,7 +222,7 @@ class StandaloneScrollBar : FrameLayout {
                     0 -> Orientation.VERTICAL
                     else -> Orientation.HORIZONTAL
                 }
-            isAlwaysShown =
+            _isAlwaysShown =
                 it.getBoolean(R.styleable.StandaloneScrollBar_scrollbarAlwaysShow, false)
             delayBeforeAutoHide = it.getInt(
                 R.styleable.StandaloneScrollBar_scrollbarDelayBeforeAutoHideDuration,
@@ -238,7 +252,7 @@ class StandaloneScrollBar : FrameLayout {
 
     private fun postAutoHideScrollbar() {
         cancelAutoHideScrollbar()
-        if (!isAlwaysShown) {
+        if (!_isAlwaysShown) {
             postDelayed(
                 autoHideScrollbarRunnable,
                 delayBeforeAutoHide
@@ -251,7 +265,7 @@ class StandaloneScrollBar : FrameLayout {
     }
 
     private fun autoHideScrollbar() {
-        if (!isDragging) {
+        if (!isDragging && !_isAlwaysShown) {
             hideScrollbar()
         }
     }
@@ -270,9 +284,7 @@ class StandaloneScrollBar : FrameLayout {
         this.scrollableView = scrollableView
         this.scrollableView.addOnScrollChangedListener(::onScrollChanged)
         this.scrollableView.addOnDraw(::onPreDraw)
-        if (!isAlwaysShown) {
-            autoHideScrollbar()
-        }
+        autoHideScrollbar()
     }
 
     fun scrollTo(offset: Int) = scrollableView.scrollTo(offset)
