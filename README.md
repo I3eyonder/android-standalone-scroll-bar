@@ -1,3 +1,5 @@
+## Demo
+<img src="demo/demo-vertical-recycler-view.gif" width="400" />
 
 ## Integration
 
