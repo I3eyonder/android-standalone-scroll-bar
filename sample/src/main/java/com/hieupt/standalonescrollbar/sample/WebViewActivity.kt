@@ -1,33 +1,37 @@
 package com.hieupt.standalonescrollbar.sample
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.webkit.WebViewClient
-import androidx.appcompat.app.AppCompatActivity
 import com.hieupt.android.standalonescrollbar.StandaloneScrollBar
 import com.hieupt.android.standalonescrollbar.attachTo
-import com.hieupt.standalonescrollbar.R
-import kotlinx.android.synthetic.main.activity_web_view.*
+import com.hieupt.android.standalonescrollbar.sample.databinding.ActivityWebViewBinding
 
-class WebViewActivity : AppCompatActivity() {
+class WebViewActivity : BaseBindingActivity<ActivityWebViewBinding>() {
+
+    override val viewBindingInflater: (LayoutInflater) -> ActivityWebViewBinding
+        get() = ActivityWebViewBinding::inflate
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_web_view)
         title = "Web View"
-        webView.apply {
-            webViewClient = WebViewClient()
-            settings.apply {
-                javaScriptEnabled = true
-                builtInZoomControls = true
-                displayZoomControls = false
-                setSupportZoom(true)
+        setupView {
+            webView.apply {
+                webViewClient = WebViewClient()
+                settings.apply {
+                    javaScriptEnabled = true
+                    builtInZoomControls = true
+                    displayZoomControls = false
+                    setSupportZoom(true)
+                }
+                loadUrl("https://google.com")
             }
-            loadUrl("https://google.com")
-        }
-        verticalScrollbar.apply {
-            attachTo(webView, StandaloneScrollBar.Orientation.VERTICAL)
-        }
-        horizontalScrollbar.apply {
-            attachTo(webView, StandaloneScrollBar.Orientation.HORIZONTAL)
+            verticalScrollbar.apply {
+                attachTo(webView, StandaloneScrollBar.Orientation.VERTICAL)
+            }
+            horizontalScrollbar.apply {
+                attachTo(webView, StandaloneScrollBar.Orientation.HORIZONTAL)
+            }
         }
     }
 }

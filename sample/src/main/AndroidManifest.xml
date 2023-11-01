@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.hieupt.standalonescrollbar">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -11,15 +11,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.StandaloneScrollBarSample">
-        <activity android:name=".sample.WebViewActivity" />
-        <activity android:name=".sample.NestedScrollViewActivity" />
-        <activity android:name=".sample.HorizontalScrollViewActivity" />
-        <activity android:name=".sample.ScrollViewActivity" />
-        <activity android:name=".sample.HorizontalGridRecyclerViewActivity" />
-        <activity android:name=".sample.VerticalGridRecyclerViewActivity" />
-        <activity android:name=".sample.HorizontalRecyclerViewActivity" />
-        <activity android:name=".sample.VerticalRecyclerViewActivity" />
-        <activity android:name=".sample.MainActivity">
+        <activity android:name="com.hieupt.standalonescrollbar.sample.WebViewActivity" />
+        <activity android:name="com.hieupt.standalonescrollbar.sample.NestedScrollViewActivity" />
+        <activity android:name="com.hieupt.standalonescrollbar.sample.HorizontalScrollViewActivity" />
+        <activity android:name="com.hieupt.standalonescrollbar.sample.ScrollViewActivity" />
+        <activity android:name="com.hieupt.standalonescrollbar.sample.HorizontalGridRecyclerViewActivity" />
+        <activity android:name="com.hieupt.standalonescrollbar.sample.VerticalGridRecyclerViewActivity" />
+        <activity android:name="com.hieupt.standalonescrollbar.sample.HorizontalRecyclerViewActivity" />
+        <activity android:name="com.hieupt.standalonescrollbar.sample.VerticalRecyclerViewActivity" />
+        <activity
+            android:name="com.hieupt.standalonescrollbar.sample.MainActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

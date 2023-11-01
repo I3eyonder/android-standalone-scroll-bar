@@ -2,8 +2,28 @@
 ## Integration
 
 ### Gradle:
+
+This library is available on [jitpack.io](https://jitpack.io/#I3eyonder/android-standalone-scroll-bar).
+
+###### Step 1. Add the JitPack repository to your build file
+
+Add this in your root build.gradle at the end of repositories:
+
 ```gradle
-implementation 'com.dev.hieupt:android-standalone-scroll-bar:1.1.2'
+allprojects {
+    repositories {
+        ...
+        maven { url 'https://jitpack.io' }
+    }
+}
+```
+
+###### Step 2. Add the dependency
+
+[![](https://jitpack.io/v/I3eyonder/android-standalone-scroll-bar.svg)](https://jitpack.io/#I3eyonder/android-standalone-scroll-bar)
+
+```gradle
+implementation 'com.github.I3eyonder:android-standalone-scroll-bar:x.y.z'
 ```
 
 ## Usage
@@ -24,17 +44,17 @@ implementation 'com.dev.hieupt:android-standalone-scroll-bar:1.1.2'
 ```kotlin
 scrollbar.attachTo(recyclerView)
 ```
-To using with [`NestedScrollView`, `ScrollView`, `HorizontalScrollView`, `WebView`], please use [[`NestedScrollView2`](https://github.com/hieupham1993/android-standalone-scroll-bar/blob/master/android-standalone-scroll-bar/src/main/java/com/hieupt/android/standalonescrollbar/view/NestedScrollView2.kt), [`ScrollView2`](https://github.com/hieupham1993/android-standalone-scroll-bar/blob/master/android-standalone-scroll-bar/src/main/java/com/hieupt/android/standalonescrollbar/view/ScrollView2.kt), [`HorizontalScrollView2`](https://github.com/hieupham1993/android-standalone-scroll-bar/blob/master/android-standalone-scroll-bar/src/main/java/com/hieupt/android/standalonescrollbar/view/HorizontalScrollView2.kt), [`WebView2`](https://github.com/hieupham1993/android-standalone-scroll-bar/blob/master/android-standalone-scroll-bar/src/main/java/com/hieupt/android/standalonescrollbar/view/WebView2.kt)] for your layout instead.
+To using with [`NestedScrollView`, `ScrollView`, `HorizontalScrollView`, `WebView`], please use [[`NestedScrollView2`](https://github.com/I3eyonder/android-standalone-scroll-bar/blob/master/android-standalone-scroll-bar/src/main/java/com/hieupt/android/standalonescrollbar/view/NestedScrollView2.kt), [`ScrollView2`](https://github.com/I3eyonder/android-standalone-scroll-bar/blob/master/android-standalone-scroll-bar/src/main/java/com/hieupt/android/standalonescrollbar/view/ScrollView2.kt), [`HorizontalScrollView2`](https://github.com/I3eyonder/android-standalone-scroll-bar/blob/master/android-standalone-scroll-bar/src/main/java/com/hieupt/android/standalonescrollbar/view/HorizontalScrollView2.kt), [`WebView2`](https://github.com/I3eyonder/android-standalone-scroll-bar/blob/master/android-standalone-scroll-bar/src/main/java/com/hieupt/android/standalonescrollbar/view/WebView2.kt)] for your layout instead.
 ```kotlin
 scrollbar.attachTo(nestedScrollView2)
 ```
-You can also implement your own [`ScrollableView`](https://github.com/hieupham1993/android-standalone-scroll-bar/blob/master/android-standalone-scroll-bar/src/main/java/com/hieupt/android/standalonescrollbar/ScrollableView.kt) to use [`StandaloneScrollBar`](https://github.com/hieupham1993/android-standalone-scroll-bar/blob/master/android-standalone-scroll-bar/src/main/java/com/hieupt/android/standalonescrollbar/StandaloneScrollBar.kt) with any `View`. You can refer [`VerticalScrollViewHelper`](https://github.com/hieupham1993/android-standalone-scroll-bar/blob/master/android-standalone-scroll-bar/src/main/java/com/hieupt/android/standalonescrollbar/viewhelper/VerticalScrollViewHelper.kt) or [`HorizontalScrollViewHelper`](https://github.com/hieupham1993/android-standalone-scroll-bar/blob/master/android-standalone-scroll-bar/src/main/java/com/hieupt/android/standalonescrollbar/viewhelper/HorizontalScrollViewHelper.kt) for example of implementation.
+You can also implement your own [`ScrollableView`](https://github.com/I3eyonder/android-standalone-scroll-bar/blob/master/android-standalone-scroll-bar/src/main/java/com/hieupt/android/standalonescrollbar/ScrollableView.kt) to use [`StandaloneScrollBar`](https://github.com/I3eyonder/android-standalone-scroll-bar/blob/master/android-standalone-scroll-bar/src/main/java/com/hieupt/android/standalonescrollbar/StandaloneScrollBar.kt) with any `View`. You can refer [`VerticalScrollViewHelper`](https://github.com/I3eyonder/android-standalone-scroll-bar/blob/master/android-standalone-scroll-bar/src/main/java/com/hieupt/android/standalonescrollbar/viewhelper/VerticalScrollViewHelper.kt) or [`HorizontalScrollViewHelper`](https://github.com/I3eyonder/android-standalone-scroll-bar/blob/master/android-standalone-scroll-bar/src/main/java/com/hieupt/android/standalonescrollbar/viewhelper/HorizontalScrollViewHelper.kt) for example of implementation.
 ```kotlin
 scrollbar.attachTo(scrollableView)
 ```
 
 ## Customization
-- Custom track/thumb visibility by using [`VisibilityManager`](https://github.com/hieupham1993/android-standalone-scroll-bar/blob/master/android-standalone-scroll-bar/src/main/java/com/hieupt/android/standalonescrollbar/VisibilityManager.kt)
+- Custom track/thumb visibility by using [`VisibilityManager`](https://github.com/I3eyonder/android-standalone-scroll-bar/blob/master/android-standalone-scroll-bar/src/main/java/com/hieupt/android/standalonescrollbar/VisibilityManager.kt)
 ```kotlin
 scrollbar.visibilityManager = YourCustomVisibilityManager()
 ```

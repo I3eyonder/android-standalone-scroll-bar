@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".sample.VerticalRecyclerViewActivity">
+    tools:context="com.hieupt.standalonescrollbar.sample.HorizontalRecyclerViewActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/horizontalRecyclerView"
@@ -14,7 +14,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/item_text"
+        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:orientation="horizontal" />
 
     <com.hieupt.android.standalonescrollbar.StandaloneScrollBar
         android:id="@+id/verticalScrollbar"

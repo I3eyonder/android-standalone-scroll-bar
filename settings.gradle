@@ -1,3 +1,0 @@
-include ':android-standalone-scroll-bar'
-include ':sample'
-rootProject.name = "StandaloneScrollBarSample"

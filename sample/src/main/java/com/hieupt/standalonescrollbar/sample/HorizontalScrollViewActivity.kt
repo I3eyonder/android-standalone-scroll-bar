@@ -1,21 +1,25 @@
 package com.hieupt.standalonescrollbar.sample
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
 import com.hieupt.android.standalonescrollbar.attachTo
-import com.hieupt.standalonescrollbar.R
-import kotlinx.android.synthetic.main.activity_horizontal_scroll_view.*
+import com.hieupt.android.standalonescrollbar.sample.databinding.ActivityHorizontalScrollViewBinding
 
-class HorizontalScrollViewActivity : AppCompatActivity() {
+class HorizontalScrollViewActivity : BaseBindingActivity<ActivityHorizontalScrollViewBinding>() {
+
+    override val viewBindingInflater: (LayoutInflater) -> ActivityHorizontalScrollViewBinding
+        get() = ActivityHorizontalScrollViewBinding::inflate
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_horizontal_scroll_view)
         title = "Horizontal Scroll View"
-        verticalScrollbar.apply {
-            attachTo(horizontalScrollView)
-        }
-        horizontalScrollbar.apply {
-            attachTo(horizontalScrollView)
+        setupView {
+            verticalScrollbar.apply {
+                attachTo(horizontalScrollView)
+            }
+            horizontalScrollbar.apply {
+                attachTo(horizontalScrollView)
+            }
         }
     }
 }

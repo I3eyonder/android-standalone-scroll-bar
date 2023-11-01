@@ -1,21 +1,25 @@
 package com.hieupt.standalonescrollbar.sample
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
 import com.hieupt.android.standalonescrollbar.attachTo
-import com.hieupt.standalonescrollbar.R
-import kotlinx.android.synthetic.main.activity_nested_scroll_view.*
+import com.hieupt.android.standalonescrollbar.sample.databinding.ActivityNestedScrollViewBinding
 
-class NestedScrollViewActivity : AppCompatActivity() {
+class NestedScrollViewActivity : BaseBindingActivity<ActivityNestedScrollViewBinding>() {
+
+    override val viewBindingInflater: (LayoutInflater) -> ActivityNestedScrollViewBinding
+        get() = ActivityNestedScrollViewBinding::inflate
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_nested_scroll_view)
         title = "Nested Scroll View"
-        verticalScrollbar.apply {
-            attachTo(scrollView)
-        }
-        horizontalScrollbar.apply {
-            attachTo(scrollView)
+        setupView {
+            verticalScrollbar.apply {
+                attachTo(scrollView)
+            }
+            horizontalScrollbar.apply {
+                attachTo(scrollView)
+            }
         }
     }
 }
