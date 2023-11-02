@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewConfiguration
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
-import androidx.core.math.MathUtils
+import androidx.core.view.ViewCompat
 import kotlin.math.abs
 
 internal sealed class OrientationHelper(internal val scrollBar: StandaloneScrollBar) {
@@ -34,7 +34,7 @@ internal sealed class OrientationHelper(internal val scrollBar: StandaloneScroll
             scrollBar.customTrackDrawable ?: defaultTrackDrawable
         if (scrollBar.customTrackDrawable == null) {
             scrollBar.defaultTrackTint?.let {
-                trackView.backgroundTintList = it
+                ViewCompat.setBackgroundTintList(trackView, it)
             }
         }
 
@@ -42,7 +42,7 @@ internal sealed class OrientationHelper(internal val scrollBar: StandaloneScroll
             scrollBar.customThumbDrawable ?: defaultThumbDrawable
         if (scrollBar.customThumbDrawable == null) {
             scrollBar.defaultThumbTint?.let {
-                thumbView.backgroundTintList = it
+                ViewCompat.setBackgroundTintList(thumbView, it)
             }
         }
     }
@@ -113,29 +113,30 @@ internal sealed class OrientationHelper(internal val scrollBar: StandaloneScroll
             )
             val thumbHeightMeasureSpec = when {
                 scrollBar.thumbLength >= 0 -> View.MeasureSpec.makeMeasureSpec(
-                    MathUtils.clamp(
-                        scrollBar.thumbLength,
+                    scrollBar.thumbLength.coerceIn(
                         scrollBar.minThumbLength,
                         scrollBar.trackView.measuredHeight
                     ), View.MeasureSpec.EXACTLY
                 )
+
                 scrollBar.thumbLengthByTrackRatio >= 0 -> View.MeasureSpec.makeMeasureSpec(
-                    MathUtils.clamp(
-                        (scrollBar.trackView.measuredHeight * scrollBar.thumbLengthByTrackRatio).toInt(),
-                        scrollBar.minThumbLength,
-                        scrollBar.trackView.measuredHeight
-                    ), View.MeasureSpec.EXACTLY
+                    (scrollBar.trackView.measuredHeight * scrollBar.thumbLengthByTrackRatio).toInt()
+                        .coerceIn(
+                            scrollBar.minThumbLength,
+                            scrollBar.trackView.measuredHeight
+                        ), View.MeasureSpec.EXACTLY
                 )
+
                 scrollBar.autoThumbLength -> View.MeasureSpec.makeMeasureSpec(
-                    MathUtils.clamp(
-                        ((scrollBar.scrollableView.viewHeight.toFloat() / scrollBar.scrollableView.scrollRange) * scrollBar.trackView.measuredHeight).toInt(),
-                        scrollBar.minThumbLength,
-                        scrollBar.trackView.measuredHeight
-                    ), View.MeasureSpec.EXACTLY
+                    ((scrollBar.scrollableView.viewHeight.toFloat() / scrollBar.scrollableView.scrollRange) * scrollBar.trackView.measuredHeight).toInt()
+                        .coerceIn(
+                            scrollBar.minThumbLength,
+                            scrollBar.trackView.measuredHeight
+                        ), View.MeasureSpec.EXACTLY
                 )
+
                 else -> View.MeasureSpec.makeMeasureSpec(
-                    MathUtils.clamp(
-                        scrollBar.thumbView.measuredHeight,
+                    scrollBar.thumbView.measuredHeight.coerceIn(
                         scrollBar.minThumbLength,
                         scrollBar.trackView.measuredHeight
                     ),
@@ -187,6 +188,7 @@ internal sealed class OrientationHelper(internal val scrollBar: StandaloneScroll
                         }
                     }
                 }
+
                 MotionEvent.ACTION_MOVE -> {
                     if (!scrollBar.isDragging && MotionHelper.isInViewTouchTarget(
                             scrollBar,
@@ -220,6 +222,7 @@ internal sealed class OrientationHelper(internal val scrollBar: StandaloneScroll
                         scrollBar.scrollToThumbOffset(thumbOffset)
                     }
                 }
+
                 MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> scrollBar.isDragging = false
             }
             lastY = eventY
@@ -279,29 +282,30 @@ internal sealed class OrientationHelper(internal val scrollBar: StandaloneScroll
         override fun getThumbMeasureSpec(): Pair<Int, Int> {
             val thumbWidthMeasureSpec = when {
                 scrollBar.thumbLength >= 0 -> View.MeasureSpec.makeMeasureSpec(
-                    MathUtils.clamp(
-                        scrollBar.thumbLength,
+                    scrollBar.thumbLength.coerceIn(
                         scrollBar.minThumbLength,
                         scrollBar.trackView.measuredWidth
                     ), View.MeasureSpec.EXACTLY
                 )
+
                 scrollBar.thumbLengthByTrackRatio >= 0 -> View.MeasureSpec.makeMeasureSpec(
-                    MathUtils.clamp(
-                        (scrollBar.trackView.measuredWidth * scrollBar.thumbLengthByTrackRatio).toInt(),
-                        scrollBar.minThumbLength,
-                        scrollBar.trackView.measuredWidth
-                    ), View.MeasureSpec.EXACTLY
+                    (scrollBar.trackView.measuredWidth * scrollBar.thumbLengthByTrackRatio).toInt()
+                        .coerceIn(
+                            scrollBar.minThumbLength,
+                            scrollBar.trackView.measuredWidth
+                        ), View.MeasureSpec.EXACTLY
                 )
+
                 scrollBar.autoThumbLength -> View.MeasureSpec.makeMeasureSpec(
-                    MathUtils.clamp(
-                        ((scrollBar.scrollableView.viewWidth.toFloat() / scrollBar.scrollableView.scrollRange) * scrollBar.trackView.measuredWidth).toInt(),
-                        scrollBar.minThumbLength,
-                        scrollBar.trackView.measuredWidth
-                    ), View.MeasureSpec.EXACTLY
+                    ((scrollBar.scrollableView.viewWidth.toFloat() / scrollBar.scrollableView.scrollRange) * scrollBar.trackView.measuredWidth).toInt()
+                        .coerceIn(
+                            scrollBar.minThumbLength,
+                            scrollBar.trackView.measuredWidth
+                        ), View.MeasureSpec.EXACTLY
                 )
+
                 else -> View.MeasureSpec.makeMeasureSpec(
-                    MathUtils.clamp(
-                        scrollBar.thumbView.measuredWidth,
+                    scrollBar.thumbView.measuredWidth.coerceIn(
                         scrollBar.minThumbLength,
                         scrollBar.trackView.measuredWidth
                     ),
@@ -361,6 +365,7 @@ internal sealed class OrientationHelper(internal val scrollBar: StandaloneScroll
                         }
                     }
                 }
+
                 MotionEvent.ACTION_MOVE -> {
                     if (!scrollBar.isDragging && MotionHelper.isInViewTouchTarget(
                             scrollBar,
@@ -403,6 +408,7 @@ internal sealed class OrientationHelper(internal val scrollBar: StandaloneScroll
                         scrollBar.scrollToThumbOffset(thumbOffset)
                     }
                 }
+
                 MotionEvent.ACTION_UP, MotionEvent.ACTION_CANCEL -> scrollBar.isDragging = false
             }
             lastX = eventX

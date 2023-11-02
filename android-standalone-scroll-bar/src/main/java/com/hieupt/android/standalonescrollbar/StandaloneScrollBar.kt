@@ -11,6 +11,7 @@ import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.use
 import androidx.core.math.MathUtils
+import androidx.core.view.ViewCompat
 import androidx.core.view.doOnLayout
 import kotlin.math.max
 
@@ -125,7 +126,7 @@ class StandaloneScrollBar : FrameLayout {
         set(value) {
             _defaultTrackTint = value
             if (_customTrackDrawable == null) {
-                trackView.backgroundTintList = value
+                ViewCompat.setBackgroundTintList(trackView, value)
             }
         }
 
@@ -134,7 +135,7 @@ class StandaloneScrollBar : FrameLayout {
         set(value) {
             _defaultThumbTint = value
             if (_customThumbDrawable == null) {
-                thumbView.backgroundTintList = value
+                ViewCompat.setBackgroundTintList(thumbView, value)
             }
         }
 
