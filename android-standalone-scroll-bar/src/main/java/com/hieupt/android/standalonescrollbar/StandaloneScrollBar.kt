@@ -24,8 +24,6 @@ class StandaloneScrollBar : FrameLayout {
 
     private val autoHideScrollbarRunnable by lazy { Runnable { autoHideScrollbar() } }
 
-    private var thumbOffset = 0
-
     private var lastScrollRange = Int.MIN_VALUE
 
     private var lastScrollOffsetRange = Int.MIN_VALUE
@@ -52,6 +50,9 @@ class StandaloneScrollBar : FrameLayout {
     private var _thumbLengthByTrackRatio = Float.NaN
 
     lateinit var scrollableView: ScrollableView
+
+    internal var thumbOffset = 0
+        private set
 
     internal val trackView: View by lazy { FrameLayout(context) }
 
@@ -297,8 +298,6 @@ class StandaloneScrollBar : FrameLayout {
     fun setCustomThumbDrawableResource(@DrawableRes resId: Int) {
         customThumbDrawable = ContextCompat.getDrawable(context, resId)
     }
-
-    internal fun getThumbOffset(): Int = thumbOffset
 
     internal fun scrollToThumbOffset(thumbOffset: Int) {
         val thumbOffsetRange: Int = orientationHelper.getThumbOffsetRange()

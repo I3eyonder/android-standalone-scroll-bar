@@ -1,11 +1,10 @@
-package com.hieupt.standalonescrollbar.sample
+package com.hieupt.android.standalonescrollbar.sample
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hieupt.android.standalonescrollbar.attachTo
-import com.hieupt.android.standalonescrollbar.sample.R
 import com.hieupt.android.standalonescrollbar.sample.databinding.ActivityHorizontalGridRecyclerViewBinding
 
 class HorizontalGridRecyclerViewActivity :

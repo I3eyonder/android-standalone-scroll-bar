@@ -1,4 +1,4 @@
-package com.hieupt.standalonescrollbar.sample
+package com.hieupt.android.standalonescrollbar.sample
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.LayoutRes
 import androidx.recyclerview.widget.RecyclerView
-import com.hieupt.android.standalonescrollbar.sample.R
 
 /**
  * Created by HieuPT on 12/4/2020.

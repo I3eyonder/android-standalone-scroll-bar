@@ -1,12 +1,12 @@
 plugins {
-    id("com.android.library")
-    id("org.jetbrains.kotlin.android")
-    `maven-publish`
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.maven.publish)
 }
 
 android {
     namespace = "com.hieupt.android.standalonescrollbar"
-    compileSdk = 33
+    compileSdk = 35
 
     defaultConfig {
         minSdk = 17
@@ -42,9 +42,10 @@ android {
 }
 
 dependencies {
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.interpolator:interpolator:1.0.0")
-    compileOnly("androidx.recyclerview:recyclerview:1.3.2")
+
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.interpolator)
+    compileOnly(libs.androidx.recyclerview)
 }
 
 publishing {

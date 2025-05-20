@@ -6,21 +6,25 @@
 
     <application
         android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.StandaloneScrollBarSample">
-        <activity android:name="com.hieupt.standalonescrollbar.sample.WebViewActivity" />
-        <activity android:name="com.hieupt.standalonescrollbar.sample.NestedScrollViewActivity" />
-        <activity android:name="com.hieupt.standalonescrollbar.sample.HorizontalScrollViewActivity" />
-        <activity android:name="com.hieupt.standalonescrollbar.sample.ScrollViewActivity" />
-        <activity android:name="com.hieupt.standalonescrollbar.sample.HorizontalGridRecyclerViewActivity" />
-        <activity android:name="com.hieupt.standalonescrollbar.sample.VerticalGridRecyclerViewActivity" />
-        <activity android:name="com.hieupt.standalonescrollbar.sample.HorizontalRecyclerViewActivity" />
-        <activity android:name="com.hieupt.standalonescrollbar.sample.VerticalRecyclerViewActivity" />
+        android:theme="@style/Theme.StandaloneScrollBarSample"
+        tools:targetApi="31">
+
+        <activity android:name="com.hieupt.android.standalonescrollbar.sample.WebViewActivity" />
+        <activity android:name="com.hieupt.android.standalonescrollbar.sample.NestedScrollViewActivity" />
+        <activity android:name="com.hieupt.android.standalonescrollbar.sample.HorizontalScrollViewActivity" />
+        <activity android:name="com.hieupt.android.standalonescrollbar.sample.ScrollViewActivity" />
+        <activity android:name="com.hieupt.android.standalonescrollbar.sample.HorizontalGridRecyclerViewActivity" />
+        <activity android:name="com.hieupt.android.standalonescrollbar.sample.VerticalGridRecyclerViewActivity" />
+        <activity android:name="com.hieupt.android.standalonescrollbar.sample.HorizontalRecyclerViewActivity" />
+        <activity android:name="com.hieupt.android.standalonescrollbar.sample.VerticalRecyclerViewActivity" />
         <activity
-            android:name="com.hieupt.standalonescrollbar.sample.MainActivity"
+            android:name="com.hieupt.android.standalonescrollbar.sample.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.hieupt.standalonescrollbar.sample.WebViewActivity">
+    tools:context="com.hieupt.android.standalonescrollbar.sample.WebViewActivity">
 
     <com.hieupt.android.standalonescrollbar.view.WebView2
         android:id="@+id/webView"

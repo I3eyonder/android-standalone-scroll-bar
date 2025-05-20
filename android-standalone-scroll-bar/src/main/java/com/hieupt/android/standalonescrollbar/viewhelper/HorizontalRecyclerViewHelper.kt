@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.hieupt.android.standalonescrollbar.HorizontalScrollableView
 import com.hieupt.android.standalonescrollbar.ScrollableView
 import kotlin.math.max
+import androidx.core.view.isEmpty
 
 internal class HorizontalRecyclerViewHelper(
     private val view: RecyclerView
@@ -94,7 +95,7 @@ internal class HorizontalRecyclerViewHelper(
 
     private val itemWidth: Int
         get() {
-            if (view.childCount == 0) {
+            if (view.isEmpty()) {
                 return 0
             }
             val itemView = view.getChildAt(0)
@@ -115,7 +116,7 @@ internal class HorizontalRecyclerViewHelper(
 
     private val firstItemAdapterPosition: Int
         get() {
-            if (view.childCount == 0) {
+            if (view.isEmpty()) {
                 return RecyclerView.NO_POSITION
             }
             val itemView = view.getChildAt(0)
@@ -126,7 +127,7 @@ internal class HorizontalRecyclerViewHelper(
 
     private val firstItemOffset: Int
         get() {
-            if (view.childCount == 0) {
+            if (view.isEmpty()) {
                 return RecyclerView.NO_POSITION
             }
             val itemView = view.getChildAt(0)

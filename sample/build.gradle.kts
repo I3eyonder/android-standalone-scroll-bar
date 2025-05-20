@@ -1,16 +1,16 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
 }
 
 android {
     namespace = "com.hieupt.android.standalonescrollbar.sample"
-    compileSdk = 33
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.hieupt.android.standalonescrollbar.sample"
         minSdk = 21
-        targetSdk = 33
+        targetSdk = 35
         versionCode = rootProject.extra["version_code"] as Int
         versionName = rootProject.extra["version_name"].toString()
 
@@ -40,11 +40,8 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.9.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.9.0")
-    implementation(project(mapOf("path" to ":android-standalone-scroll-bar")))
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    implementation(libs.androidx.core.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.material)
+    implementation(project(":android-standalone-scroll-bar"))
 }

@@ -1,11 +1,10 @@
-package com.hieupt.standalonescrollbar.sample
+package com.hieupt.android.standalonescrollbar.sample
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.hieupt.android.standalonescrollbar.sample.R
 
 /**
  * Created by HieuPT on 12/4/2020.
@@ -23,13 +22,13 @@ class MenuAdapter(
         holder.bind()
     }
 
-    override fun getItemCount(): Int = Menu.values().size
+    override fun getItemCount(): Int = Menu.entries.size
 
     inner class Holder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         fun bind() {
             val textView = itemView as TextView
-            val menu = Menu.values()[adapterPosition]
+            val menu = Menu.entries[adapterPosition]
             textView.text = menu.menuName
             textView.setOnClickListener {
                 onItemClickListener(menu)

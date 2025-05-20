@@ -1,4 +1,4 @@
-package com.hieupt.standalonescrollbar.sample
+package com.hieupt.android.standalonescrollbar.sample
 
 import android.content.Intent
 import android.os.Bundle

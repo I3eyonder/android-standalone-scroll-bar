@@ -101,7 +101,7 @@ internal sealed class OrientationHelper(internal val scrollBar: StandaloneScroll
         }
 
         override fun updateThumbOffsetLayout() {
-            val thumbTop = scrollBar.getThumbOffset()
+            val thumbTop = scrollBar.thumbOffset
             val thumbHeight = scrollBar.thumbView.height
             scrollBar.thumbView.updateLayout(top = thumbTop, bottom = thumbTop + thumbHeight)
         }
@@ -166,7 +166,7 @@ internal sealed class OrientationHelper(internal val scrollBar: StandaloneScroll
                                 minTouchTargetSize
                             )
                         ) {
-                            dragStartThumbOffset = scrollBar.getThumbOffset()
+                            dragStartThumbOffset = scrollBar.thumbOffset
                         } else {
                             dragStartThumbOffset =
                                 eventY.toInt() - scrollBar.paddingTop - scrollBar.thumbView.height / 2
@@ -183,7 +183,7 @@ internal sealed class OrientationHelper(internal val scrollBar: StandaloneScroll
                             )
                         ) {
                             dragStartY = eventY
-                            dragStartThumbOffset = scrollBar.getThumbOffset()
+                            dragStartThumbOffset = scrollBar.thumbOffset
                             scrollBar.isDragging = true
                         }
                     }
@@ -208,7 +208,7 @@ internal sealed class OrientationHelper(internal val scrollBar: StandaloneScroll
                             )
                         ) {
                             dragStartY = lastY
-                            dragStartThumbOffset = scrollBar.getThumbOffset()
+                            dragStartThumbOffset = scrollBar.thumbOffset
                         } else {
                             dragStartY = eventY
                             dragStartThumbOffset =
@@ -267,7 +267,7 @@ internal sealed class OrientationHelper(internal val scrollBar: StandaloneScroll
         }
 
         override fun updateThumbOffsetLayout() {
-            val thumbStart = scrollBar.getThumbOffset()
+            val thumbStart = scrollBar.thumbOffset
             val thumbWidth = scrollBar.thumbView.width
             if (scrollBar.isLayoutRtl) {
                 scrollBar.thumbView.updateLayout(
@@ -339,7 +339,7 @@ internal sealed class OrientationHelper(internal val scrollBar: StandaloneScroll
                                 minTouchTargetSize
                             )
                         ) {
-                            dragStartThumbOffset = scrollBar.getThumbOffset()
+                            dragStartThumbOffset = scrollBar.thumbOffset
                         } else {
                             dragStartThumbOffset =
                                 if (scrollBar.isLayoutRtl) {
@@ -360,7 +360,7 @@ internal sealed class OrientationHelper(internal val scrollBar: StandaloneScroll
                             )
                         ) {
                             dragStartX = eventX
-                            dragStartThumbOffset = scrollBar.getThumbOffset()
+                            dragStartThumbOffset = scrollBar.thumbOffset
                             scrollBar.isDragging = true
                         }
                     }
@@ -385,7 +385,7 @@ internal sealed class OrientationHelper(internal val scrollBar: StandaloneScroll
                             )
                         ) {
                             dragStartX = lastX
-                            dragStartThumbOffset = scrollBar.getThumbOffset()
+                            dragStartThumbOffset = scrollBar.thumbOffset
                         } else {
                             dragStartX = eventX
                             dragStartThumbOffset =
