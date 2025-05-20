@@ -10,7 +10,6 @@ import android.widget.FrameLayout
 import androidx.annotation.DrawableRes
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.use
-import androidx.core.math.MathUtils
 import androidx.core.view.ViewCompat
 import androidx.core.view.doOnLayout
 import kotlin.math.max
@@ -24,9 +23,9 @@ class StandaloneScrollBar : FrameLayout {
 
     private val autoHideScrollbarRunnable by lazy { Runnable { autoHideScrollbar() } }
 
-    private var lastScrollRange = Int.MIN_VALUE
+    private var lastScrollRange = Long.MIN_VALUE
 
-    private var lastScrollOffsetRange = Int.MIN_VALUE
+    private var lastScrollOffsetRange = Long.MIN_VALUE
 
     private val isLayoutDirty: Boolean
         get() = lastScrollRange != scrollableView.scrollRange || lastScrollOffsetRange != scrollableView.scrollOffsetRange
@@ -300,20 +299,20 @@ class StandaloneScrollBar : FrameLayout {
     }
 
     internal fun scrollToThumbOffset(thumbOffset: Int) {
-        val thumbOffsetRange: Int = orientationHelper.getThumbOffsetRange()
-        val offset = MathUtils.clamp(thumbOffset, 0, thumbOffsetRange)
+        val thumbOffsetRange = orientationHelper.getThumbOffsetRange()
+        val offset = thumbOffset.coerceIn(0, thumbOffsetRange)
         val scrollOffset = scrollableView.scrollOffsetRange * offset / thumbOffsetRange
-        scrollTo(scrollOffset)
+        scrollTo(scrollOffset.toInt())
     }
 
     private fun updateScrollbarState() {
-        val scrollOffsetRange: Int = scrollableView.scrollOffsetRange
+        val scrollOffsetRange = scrollableView.scrollOffsetRange
         shouldShow = scrollOffsetRange > 0
         thumbOffset = if (shouldShow) {
             orientationHelper.getThumbOffsetRange() * scrollableView.scrollOffset / scrollOffsetRange
         } else {
             0
-        }
+        }.toInt()
     }
 
     private fun onScrollChanged(caller: ScrollableView) {

@@ -42,16 +42,16 @@ internal class VerticalRecyclerViewHelper(
     override val viewHeight: Int
         get() = view.height
 
-    override val scrollRange: Int
+    override val scrollRange: Long
         get() {
             return if (itemCount == 0 || itemHeight == 0) {
                 0
             } else {
-                view.paddingTop + itemCount * itemHeight + view.paddingBottom
+                view.paddingTop + itemCount.toLong() * itemHeight + view.paddingBottom
             }
         }
 
-    override val scrollOffset: Int
+    override val scrollOffset: Long
         get() {
             val firstItemPosition = firstItemPosition
             if (firstItemPosition == RecyclerView.NO_POSITION) {
@@ -59,7 +59,7 @@ internal class VerticalRecyclerViewHelper(
             }
             val itemHeight = itemHeight
             val firstItemTop = firstItemOffset
-            return view.paddingTop + firstItemPosition * itemHeight - firstItemTop
+            return view.paddingTop + firstItemPosition.toLong() * itemHeight - firstItemTop
         }
 
     override fun scrollTo(offset: Int) {
