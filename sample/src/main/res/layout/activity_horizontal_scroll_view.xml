@@ -31,6 +31,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:scrollbarDefaultThumbTint="?colorControlActivated"
         app:scrollbarOrientation="vertical" />
 
     <com.hieupt.android.standalonescrollbar.StandaloneScrollBar
@@ -38,6 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:scrollbarDefaultThumbTint="?colorControlActivated"
         app:scrollbarOrientation="horizontal" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

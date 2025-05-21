@@ -22,8 +22,7 @@
   -->
 <shape
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="rectangle"
-    android:tint="?colorControlActivated">
+    android:shape="rectangle">
 
     <corners android:radius="8dp" />
 
