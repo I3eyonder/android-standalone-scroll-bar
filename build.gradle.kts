@@ -7,5 +7,5 @@ plugins {
 
 extra["group_id"] = "com.hieupt.android"
 extra["artifact_id"] = "standalonescrollbar"
-extra["version_name"] = "1.1.3"
-extra["version_code"] = 5
+extra["version_name"] = "1.1.4"
+extra["version_code"] = 6
