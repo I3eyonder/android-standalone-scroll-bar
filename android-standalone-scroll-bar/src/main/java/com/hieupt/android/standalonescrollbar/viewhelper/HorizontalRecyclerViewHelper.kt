@@ -45,16 +45,16 @@ internal class HorizontalRecyclerViewHelper(
     override val viewHeight: Int
         get() = view.height
 
-    override val scrollRange: Int
+    override val scrollRange: Long
         get() {
             return if (itemCount == 0 || itemWidth == 0) {
-                0
+                0L
             } else {
-                view.paddingStart + itemCount * itemWidth + view.paddingEnd
+                view.paddingStart + itemCount.toLong() * itemWidth + view.paddingEnd
             }
         }
 
-    override val scrollOffset: Int
+    override val scrollOffset: Long
         get() {
             val firstItemPosition = firstItemPosition
             if (firstItemPosition == RecyclerView.NO_POSITION) {
@@ -63,9 +63,9 @@ internal class HorizontalRecyclerViewHelper(
             val itemWidth = itemWidth
             val firstItemStart = firstItemOffset
             return if (isLayoutRtl) {
-                view.paddingStart + firstItemPosition * itemWidth + firstItemStart - view.width
+                view.paddingStart + firstItemPosition.toLong() * itemWidth + firstItemStart - view.width
             } else {
-                view.paddingStart + firstItemPosition * itemWidth - firstItemStart
+                view.paddingStart + firstItemPosition.toLong() * itemWidth - firstItemStart
             }
         }
 

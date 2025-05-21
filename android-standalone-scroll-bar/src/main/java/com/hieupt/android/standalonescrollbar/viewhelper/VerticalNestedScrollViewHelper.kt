@@ -17,11 +17,11 @@ internal class VerticalNestedScrollViewHelper(
     override val viewHeight: Int
         get() = scrollView.height
 
-    override val scrollRange: Int
-        get() = scrollView.calculateVerticalScrollRange() + scrollView.paddingTop + scrollView.paddingBottom
+    override val scrollRange: Long
+        get() = scrollView.calculateVerticalScrollRange().toLong() + scrollView.paddingTop + scrollView.paddingBottom
 
-    override val scrollOffset: Int
-        get() = scrollView.calculateVerticalScrollOffset()
+    override val scrollOffset: Long
+        get() = scrollView.calculateVerticalScrollOffset().toLong()
 
     override fun addOnScrollChangedListener(onScrollChanged: (caller: ScrollableView) -> Unit) {
         scrollView.addOnScrollListener { _, _, _, _ ->

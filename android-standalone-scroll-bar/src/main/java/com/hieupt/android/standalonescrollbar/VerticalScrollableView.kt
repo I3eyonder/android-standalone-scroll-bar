@@ -5,6 +5,6 @@ package com.hieupt.android.standalonescrollbar
  */
 interface VerticalScrollableView : ScrollableView {
 
-    override val scrollOffsetRange: Int
+    override val scrollOffsetRange: Long
         get() = scrollRange - viewHeight
 }

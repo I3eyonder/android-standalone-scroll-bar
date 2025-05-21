@@ -17,11 +17,11 @@ internal class VerticalWebViewViewHelper(
     override val viewHeight: Int
         get() = webView.height
 
-    override val scrollRange: Int
-        get() = webView.calculateVerticalScrollRange()
+    override val scrollRange: Long
+        get() = webView.calculateVerticalScrollRange().toLong()
 
-    override val scrollOffset: Int
-        get() = webView.calculateVerticalScrollOffset()
+    override val scrollOffset: Long
+        get() = webView.calculateVerticalScrollOffset().toLong()
 
     override fun addOnScrollChangedListener(onScrollChanged: (caller: ScrollableView) -> Unit) {
         webView.addOnScrollListener { _, _, _, _ ->

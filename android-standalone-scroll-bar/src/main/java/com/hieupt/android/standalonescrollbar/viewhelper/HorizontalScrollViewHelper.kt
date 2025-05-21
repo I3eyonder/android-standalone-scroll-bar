@@ -19,11 +19,11 @@ internal class HorizontalScrollViewHelper(
     override val viewHeight: Int
         get() = scrollView.height
 
-    override val scrollRange: Int
-        get() = scrollView.calculateHorizontalScrollRange() + scrollView.paddingStart + scrollView.paddingEnd
+    override val scrollRange: Long
+        get() = scrollView.calculateHorizontalScrollRange().toLong() + scrollView.paddingStart + scrollView.paddingEnd
 
-    override val scrollOffset: Int
-        get() = scrollView.calculateHorizontalScrollOffset()
+    override val scrollOffset: Long
+        get() = scrollView.calculateHorizontalScrollOffset().toLong()
 
     override fun addOnScrollChangedListener(onScrollChanged: (caller: ScrollableView) -> Unit) {
         scrollView.addOnScrollListener { _, _, _, _ ->
