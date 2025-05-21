@@ -9,14 +9,15 @@ This library is available on [jitpack.io](https://jitpack.io/#I3eyonder/android-
 
 ###### Step 1. Add the JitPack repository to your build file
 
-Add this in your root build.gradle at the end of repositories:
+Add it in your settings.gradle.kts at the end of repositories:
 
 ```gradle
-allprojects {
-    repositories {
-        ...
-        maven { url 'https://jitpack.io' }
-    }
+dependencyResolutionManagement {
+	repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+	repositories {
+		mavenCentral()
+		maven { url = uri("https://jitpack.io") }
+	}
 }
 ```
 
@@ -25,7 +26,7 @@ allprojects {
 [![](https://jitpack.io/v/I3eyonder/android-standalone-scroll-bar.svg)](https://jitpack.io/#I3eyonder/android-standalone-scroll-bar)
 
 ```gradle
-implementation 'com.github.I3eyonder:android-standalone-scroll-bar:x.y.z'
+implementation("com.github.I3eyonder:android-standalone-scroll-bar:Tag")
 ```
 
 ## Usage
