@@ -21,7 +21,7 @@ fun View.updateLayout(
     layout(left, top, right, bottom)
 }
 
-fun StandaloneScrollBar.attachTo(recyclerView: RecyclerView) {
+infix fun StandaloneScrollBar.attachTo(recyclerView: RecyclerView) {
     val layoutManager = recyclerView.layoutManager
     if (layoutManager is LinearLayoutManager) {
         when (layoutManager.orientation) {
@@ -33,15 +33,15 @@ fun StandaloneScrollBar.attachTo(recyclerView: RecyclerView) {
     }
 }
 
-fun StandaloneScrollBar.attachTo(scrollView: NestedScrollView2) {
+infix fun StandaloneScrollBar.attachTo(scrollView: NestedScrollView2) {
     attachTo(VerticalNestedScrollViewHelper(scrollView))
 }
 
-fun StandaloneScrollBar.attachTo(scrollView: ScrollView2) {
+infix fun StandaloneScrollBar.attachTo(scrollView: ScrollView2) {
     attachTo(VerticalScrollViewHelper(scrollView))
 }
 
-fun StandaloneScrollBar.attachTo(scrollView: HorizontalScrollView2) {
+infix fun StandaloneScrollBar.attachTo(scrollView: HorizontalScrollView2) {
     attachTo(HorizontalScrollViewHelper(scrollView))
 }
 

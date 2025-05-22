@@ -12,6 +12,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.use
 import androidx.core.view.ViewCompat
 import androidx.core.view.doOnLayout
+import com.hieupt.android.standalonescrollbar.visibilitymanager.FadeVisibilityManager
+import com.hieupt.android.standalonescrollbar.visibilitymanager.VisibilityManager
 import kotlin.math.max
 
 /**
@@ -58,6 +60,7 @@ class StandaloneScrollBar : FrameLayout {
     internal val thumbView: View by lazy { FrameLayout(context) }
 
     internal var shouldShow: Boolean = false
+        private set
 
     internal var isDragging: Boolean = false
         set(value) {
@@ -70,7 +73,6 @@ class StandaloneScrollBar : FrameLayout {
                 thumbView.isPressed = value
 
                 if (value) {
-                    cancelAutoHideScrollbar()
                     showScrollbar()
                 } else {
                     postAutoHideScrollbar()
@@ -79,12 +81,10 @@ class StandaloneScrollBar : FrameLayout {
         }
 
     internal val isTrackViewShowing: Boolean
-        get() = visibilityManager?.isTrackViewShowing(trackView)
-            ?: DefaultVisibilityManager.isTrackViewShowing(trackView)
+        get() = visibilityManager.isTrackViewShowing(trackView)
 
     internal val isThumbViewShowing: Boolean
-        get() = visibilityManager?.isThumbViewShowing(thumbView)
-            ?: DefaultVisibilityManager.isThumbViewShowing(thumbView)
+        get() = visibilityManager.isThumbViewShowing(thumbView)
 
     var orientation: Orientation
         get() = _orientation
@@ -105,7 +105,14 @@ class StandaloneScrollBar : FrameLayout {
             }
         }
 
-    var visibilityManager: VisibilityManager? = null
+    var visibilityManager: VisibilityManager = FadeVisibilityManager()
+        set(value) {
+            if (!::scrollableView.isInitialized) {
+                field = value
+            } else {
+                throw IllegalArgumentException("VisibilityManager must be set before StandaloneScrollBar attach to a ScrollableView")
+            }
+        }
 
     var customTrackDrawable: Drawable?
         get() = _customTrackDrawable
@@ -147,7 +154,6 @@ class StandaloneScrollBar : FrameLayout {
             if (_isAlwaysShown != value) {
                 _isAlwaysShown = value
                 if (value) {
-                    cancelAutoHideScrollbar()
                     showScrollbar()
                 } else {
                     postAutoHideScrollbar()
@@ -244,10 +250,8 @@ class StandaloneScrollBar : FrameLayout {
                 it.getBoolean(R.styleable.StandaloneScrollBar_scrollbarAutoThumbLength, false)
             draggable = it.getBoolean(R.styleable.StandaloneScrollBar_scrollbarDraggable, true)
 
-            visibilityManager = FadeVisibilityManager()
             addView(trackView)
             addView(thumbView)
-            autoHideScrollbar()
         }
     }
 
@@ -272,20 +276,29 @@ class StandaloneScrollBar : FrameLayout {
     }
 
     private fun showScrollbar() {
-        visibilityManager?.showScrollbar(trackView, thumbView, isLayoutRtl)
-            ?: DefaultVisibilityManager.showScrollbar(trackView, thumbView, isLayoutRtl)
+        cancelAutoHideScrollbar()
+        visibilityManager.showScrollbar(trackView, thumbView, isLayoutRtl)
     }
 
     private fun hideScrollbar() {
-        visibilityManager?.hideScrollbar(trackView, thumbView, isLayoutRtl)
-            ?: DefaultVisibilityManager.hideScrollbar(trackView, thumbView, isLayoutRtl)
+        visibilityManager.hideScrollbar(trackView, thumbView, isLayoutRtl)
+    }
+
+    private fun showScrollbarImmediately() {
+        cancelAutoHideScrollbar()
+        visibilityManager.showScrollbarImmediately(trackView, thumbView, isLayoutRtl)
+    }
+
+    private fun hideScrollbarImmediately() {
+        cancelAutoHideScrollbar()
+        visibilityManager.hideScrollbarImmediately(trackView, thumbView, isLayoutRtl)
     }
 
     fun attachTo(scrollableView: ScrollableView) {
-        this.scrollableView = scrollableView
-        this.scrollableView.addOnScrollChangedListener(::onScrollChanged)
-        this.scrollableView.addOnDraw(::onPreDraw)
-        autoHideScrollbar()
+        this.scrollableView = scrollableView.apply {
+            addOnScrollChangedListener(::onScrollChanged)
+            addOnDraw(::onPreDraw)
+        }
     }
 
     fun scrollTo(offset: Int) = scrollableView.scrollTo(offset)
@@ -321,6 +334,8 @@ class StandaloneScrollBar : FrameLayout {
             if (shouldShow) {
                 showScrollbar()
                 postAutoHideScrollbar()
+            } else {
+                hideScrollbarImmediately()
             }
         }
     }
@@ -335,6 +350,8 @@ class StandaloneScrollBar : FrameLayout {
             updateScrollbarState()
             if (shouldShow) {
                 doOnLayout { orientationHelper.updateThumbOffsetLayout() }
+            } else {
+                hideScrollbarImmediately()
             }
         }
     }
