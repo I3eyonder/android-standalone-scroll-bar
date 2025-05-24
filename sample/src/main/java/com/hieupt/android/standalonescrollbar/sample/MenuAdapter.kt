@@ -45,5 +45,6 @@ class MenuAdapter(
         SCROLL_VIEW("Scroll View"),
         HORIZONTAL_SCROLL_VIEW("Horizontal Scroll View"),
         WEB_VIEW("Web View"),
+        DYNAMIC_VERTICAL_RECYCLER_VIEW("Dynamic Vertical Recycler View"),
     }
 }
