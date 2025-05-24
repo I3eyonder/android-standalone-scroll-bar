@@ -42,7 +42,7 @@ class StandaloneScrollBar : FrameLayout {
 
     private var _orientation = Orientation.VERTICAL
 
-    private var _isAlwaysShown = false
+    private var _delayBeforeAutoHide = DEFAULT_AUTO_HIDE_SCROLLBAR_DELAY_MILLIS
 
     private var _minThumbLength = 0
 
@@ -148,20 +148,27 @@ class StandaloneScrollBar : FrameLayout {
 
     var draggable = true
 
-    var isAlwaysShown: Boolean
-        get() = _isAlwaysShown
+    val isAlwaysShown: Boolean
+        get() = _delayBeforeAutoHide < 0L
+
+    val isAlwaysHidden: Boolean
+        get() = _delayBeforeAutoHide == 0L
+
+    var delayBeforeAutoHide: Long
+        get() = _delayBeforeAutoHide
         set(value) {
-            if (_isAlwaysShown != value) {
-                _isAlwaysShown = value
-                if (value) {
-                    showScrollbar()
-                } else {
-                    postAutoHideScrollbar()
-                }
+            val refinedValue = value.coerceAtLeast(-1L)
+            _delayBeforeAutoHide = refinedValue
+            if (refinedValue < 0L) {
+                //Always show
+                showScrollbar()
+            } else if (refinedValue == 0L) {
+                //Always hide
+                hideScrollbarImmediately()
+            } else {
+                postAutoHideScrollbar()
             }
         }
-
-    var delayBeforeAutoHide = AUTO_HIDE_SCROLLBAR_DELAY_MILLIS
 
     var minThumbLength: Int
         get() = _minThumbLength
@@ -229,12 +236,10 @@ class StandaloneScrollBar : FrameLayout {
                     0 -> Orientation.VERTICAL
                     else -> Orientation.HORIZONTAL
                 }
-            _isAlwaysShown =
-                it.getBoolean(R.styleable.StandaloneScrollBar_scrollbarAlwaysShow, false)
-            delayBeforeAutoHide = it.getInt(
+            _delayBeforeAutoHide = it.getInt(
                 R.styleable.StandaloneScrollBar_scrollbarDelayBeforeAutoHideDuration,
-                AUTO_HIDE_SCROLLBAR_DELAY_MILLIS.toInt()
-            ).toLong()
+                DEFAULT_AUTO_HIDE_SCROLLBAR_DELAY_MILLIS.toInt()
+            ).coerceAtLeast(-1).toLong()
             _minThumbLength =
                 it.getDimensionPixelSize(R.styleable.StandaloneScrollBar_scrollbarMinThumbLength, 0)
             _thumbLength = it.getDimensionPixelSize(
@@ -257,11 +262,15 @@ class StandaloneScrollBar : FrameLayout {
 
     private fun postAutoHideScrollbar() {
         cancelAutoHideScrollbar()
-        if (!_isAlwaysShown) {
-            postDelayed(
-                autoHideScrollbarRunnable,
-                delayBeforeAutoHide
-            )
+        if (!isAlwaysShown) {
+            if (isAlwaysHidden) {
+                hideScrollbarImmediately()
+            } else {
+                postDelayed(
+                    autoHideScrollbarRunnable,
+                    _delayBeforeAutoHide
+                )
+            }
         }
     }
 
@@ -270,7 +279,7 @@ class StandaloneScrollBar : FrameLayout {
     }
 
     private fun autoHideScrollbar() {
-        if (!isDragging && !_isAlwaysShown) {
+        if (!isDragging && !isAlwaysShown) {
             hideScrollbar()
         }
     }
@@ -285,7 +294,6 @@ class StandaloneScrollBar : FrameLayout {
     }
 
     private fun showScrollbarImmediately() {
-        cancelAutoHideScrollbar()
         visibilityManager.showScrollbarImmediately(trackView, thumbView, isLayoutRtl)
     }
 
@@ -330,28 +338,32 @@ class StandaloneScrollBar : FrameLayout {
 
     private fun onScrollChanged(caller: ScrollableView) {
         if (caller === scrollableView) {
-            updateScrollbarState()
-            if (shouldShow) {
-                showScrollbar()
-                postAutoHideScrollbar()
-            } else {
-                hideScrollbarImmediately()
+            if (!isAlwaysHidden) {
+                updateScrollbarState()
+                if (shouldShow) {
+                    showScrollbar()
+                    postAutoHideScrollbar()
+                } else {
+                    hideScrollbarImmediately()
+                }
             }
         }
     }
 
     private fun onPreDraw(caller: ScrollableView) {
         if (caller === scrollableView) {
-            if (autoThumbLength && isLayoutDirty) {
-                requestLayout()
-            }
-            lastScrollRange = scrollableView.scrollRange
-            lastScrollOffsetRange = scrollableView.scrollOffsetRange
-            updateScrollbarState()
-            if (shouldShow) {
-                doOnLayout { orientationHelper.updateThumbOffsetLayout() }
-            } else {
-                hideScrollbarImmediately()
+            if (!isAlwaysHidden) {
+                if (autoThumbLength && isLayoutDirty) {
+                    requestLayout()
+                }
+                lastScrollRange = scrollableView.scrollRange
+                lastScrollOffsetRange = scrollableView.scrollOffsetRange
+                updateScrollbarState()
+                if (shouldShow) {
+                    doOnLayout { orientationHelper.updateThumbOffsetLayout() }
+                } else {
+                    hideScrollbarImmediately()
+                }
             }
         }
     }
@@ -374,6 +386,16 @@ class StandaloneScrollBar : FrameLayout {
     }
 
     companion object {
-        private const val AUTO_HIDE_SCROLLBAR_DELAY_MILLIS = 1500L
+        const val DEFAULT_AUTO_HIDE_SCROLLBAR_DELAY_MILLIS = 1500L
+
+        /**
+         * Always show scrollbar
+         */
+        const val AUTO_HIDE_SCROLLBAR_DELAY_INFINITY_MILLIS = -1L
+
+        /**
+         * Always hide scrollbar
+         */
+        const val AUTO_HIDE_SCROLLBAR_DELAY_ZERO_MILLIS = 0L
     }
 }
