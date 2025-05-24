@@ -93,12 +93,11 @@ scrollbar.autoThumbLength = true|false
 scrollbar.draggable = true|false
 ```
 ---
-- Auto hide ability (attribute `scrollbarAlwaysShow`)
-```kotlin
-scrollbar.isAlwaysShown = true|false
-```
----
-- Delay duration before scrollbar auto hide (attribute `scrollbarDelayBeforeAutoHideDuration`)
+- Delay duration before scrollbar auto hide in milliseconds (attribute `scrollbarDelayBeforeAutoHideDuration`)
+
+  There are 2 special constants:
+  - `StandaloneScrollBar.AUTO_HIDE_SCROLLBAR_DELAY_INFINITY_MILLIS`(attribute value `infinity`): This cause scrollbar always shown.
+  - `StandaloneScrollBar.AUTO_HIDE_SCROLLBAR_DELAY_ZERO_MILLIS`(attribute value `zero`): This cause scrollbar always hidden.
 ```kotlin
 scrollbar.delayBeforeAutoHide = delayTimeInMillis
 ```

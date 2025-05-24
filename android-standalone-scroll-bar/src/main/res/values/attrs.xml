@@ -11,8 +11,15 @@
         <attr name="scrollbarThumbLength" format="dimension" />
         <attr name="scrollbarThumbLengthByTrackRatio" format="float" />
         <attr name="scrollbarAutoThumbLength" format="boolean" />
-        <attr name="scrollbarAlwaysShow" format="boolean" />
-        <attr name="scrollbarDelayBeforeAutoHideDuration" format="integer" />
+        <!-- Specifies the duration to delayed before the scrollbar hides in millisecond. Its value may
+             be positive integer number for a fixed duration, or one of
+             the special constants. -->
+        <attr name="scrollbarDelayBeforeAutoHideDuration" format="integer">
+            <!-- scrollbar will be always shown -->
+            <enum name="infinity" value="-1" />
+            <!-- scrollbar will be always hidden -->
+            <enum name="zero" value="0" />
+        </attr>
         <attr name="scrollbarDraggable" format="boolean" />
         <attr name="scrollbarDefaultTrackTint" format="reference|color" />
         <attr name="scrollbarDefaultThumbTint" format="reference|color" />
