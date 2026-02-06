@@ -1,24 +1,13 @@
 package com.hieupt.android.standalonescrollbar.viewhelper
 
 import android.graphics.Canvas
-import android.graphics.Rect
-import android.view.View
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hieupt.android.standalonescrollbar.HorizontalScrollableView
 import com.hieupt.android.standalonescrollbar.ScrollableView
-import kotlin.math.max
-import androidx.core.view.isEmpty
 
 internal class HorizontalRecyclerViewHelper(
-    private val view: RecyclerView
+    private val view: RecyclerView,
 ) : HorizontalScrollableView {
-
-    private val isLayoutRtl: Boolean
-        get() = view.layoutDirection == View.LAYOUT_DIRECTION_RTL
-
-    private val tempRect = Rect()
 
     override fun addOnScrollChangedListener(onScrollChanged: (caller: ScrollableView) -> Unit) {
         view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -46,115 +35,23 @@ internal class HorizontalRecyclerViewHelper(
         get() = view.height
 
     override val scrollRange: Long
-        get() {
-            return if (itemCount == 0 || itemWidth == 0) {
-                0L
-            } else {
-                view.paddingStart + itemCount.toLong() * itemWidth + view.paddingEnd
-            }
-        }
+        get() = view.computeHorizontalScrollRange().toLong() + view.paddingStart + view.paddingEnd
 
     override val scrollOffset: Long
-        get() {
-            val firstItemPosition = firstItemPosition
-            if (firstItemPosition == RecyclerView.NO_POSITION) {
-                return 0
-            }
-            val itemWidth = itemWidth
-            val firstItemStart = firstItemOffset
-            return if (isLayoutRtl) {
-                view.paddingStart + firstItemPosition.toLong() * itemWidth + firstItemStart - view.width
-            } else {
-                view.paddingStart + firstItemPosition.toLong() * itemWidth - firstItemStart
-            }
-        }
+        get() = view.computeHorizontalScrollOffset().toLong()
 
     override fun scrollTo(offset: Int) {
-        // Stop any scroll in progress for RecyclerView.
-        view.stopScroll()
-        val scrollOffset = offset - view.paddingStart
-        val itemWidth = itemWidth
-        // firstItemPosition should be non-negative even if paddingTop is greater than item height.
-        val firstItemPosition = max(0, scrollOffset / itemWidth)
-        val firstItemStart = firstItemPosition * itemWidth - scrollOffset
-        scrollToPositionWithOffset(firstItemPosition, firstItemStart)
+        view.apply {
+            // Stop any scroll in progress for RecyclerView.
+            stopScroll()
+            val lastAdjustScrollOffset = offset - scrollOffset
+            val lastScrollOffsetRange = scrollOffsetRange
+            scrollBy(lastAdjustScrollOffset.toInt(), 0)
+            // scrollOffsetRange may change after scroll, we need to adjust scroll again to make sure the scroll offset is correct.
+            if (lastScrollOffsetRange != scrollOffsetRange) {
+                val adjustBy = scrollOffsetRange * offset / lastScrollOffsetRange - scrollOffset
+                scrollBy(adjustBy.toInt(), 0)
+            }
+        }
     }
-
-    private val itemCount: Int
-        get() {
-            val linearLayoutManager = horizontalLinearLayoutManager ?: return 0
-            var itemCount = linearLayoutManager.itemCount
-            if (itemCount == 0) {
-                return 0
-            }
-            if (linearLayoutManager is GridLayoutManager) {
-                itemCount = (itemCount - 1) / linearLayoutManager.spanCount + 1
-            }
-            return itemCount
-        }
-
-    private val itemWidth: Int
-        get() {
-            if (view.isEmpty()) {
-                return 0
-            }
-            val itemView = view.getChildAt(0)
-            view.getDecoratedBoundsWithMargins(itemView, tempRect)
-            return tempRect.width()
-        }
-
-    private val firstItemPosition: Int
-        get() {
-            var position = firstItemAdapterPosition
-            val linearLayoutManager =
-                horizontalLinearLayoutManager ?: return RecyclerView.NO_POSITION
-            if (linearLayoutManager is GridLayoutManager) {
-                position /= linearLayoutManager.spanCount
-            }
-            return position
-        }
-
-    private val firstItemAdapterPosition: Int
-        get() {
-            if (view.isEmpty()) {
-                return RecyclerView.NO_POSITION
-            }
-            val itemView = view.getChildAt(0)
-            val linearLayoutManager =
-                horizontalLinearLayoutManager ?: return RecyclerView.NO_POSITION
-            return linearLayoutManager.getPosition(itemView)
-        }
-
-    private val firstItemOffset: Int
-        get() {
-            if (view.isEmpty()) {
-                return RecyclerView.NO_POSITION
-            }
-            val itemView = view.getChildAt(0)
-            view.getDecoratedBoundsWithMargins(itemView, tempRect)
-            return if (isLayoutRtl) {
-                tempRect.right
-            } else {
-                tempRect.left
-            }
-        }
-
-    private fun scrollToPositionWithOffset(position: Int, offset: Int) {
-        var scrollPosition = position
-        val linearLayoutManager = horizontalLinearLayoutManager ?: return
-        if (linearLayoutManager is GridLayoutManager) {
-            scrollPosition *= linearLayoutManager.spanCount
-        }
-        // LinearLayoutManager actually takes offset from paddingStart instead of start of RecyclerView.
-        val scrollOffset = offset - view.paddingStart
-        linearLayoutManager.scrollToPositionWithOffset(scrollPosition, scrollOffset)
-    }
-
-    private val horizontalLinearLayoutManager: LinearLayoutManager?
-        get() {
-            val layoutManager = view.layoutManager as? LinearLayoutManager ?: return null
-            return if (layoutManager.orientation != RecyclerView.HORIZONTAL) {
-                null
-            } else layoutManager
-        }
 }

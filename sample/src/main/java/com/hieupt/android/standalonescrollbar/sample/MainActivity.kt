@@ -28,6 +28,8 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>() {
                         MenuAdapter.Menu.HORIZONTAL_SCROLL_VIEW -> HorizontalScrollViewActivity::class.java
                         MenuAdapter.Menu.WEB_VIEW -> WebViewActivity::class.java
                         MenuAdapter.Menu.DYNAMIC_VERTICAL_RECYCLER_VIEW -> DynamicVerticalRecyclerViewActivity::class.java
+                        MenuAdapter.Menu.VARIOUS_ITEM_HEIGHT_VERTICAL_RECYCLER_VIEW -> VariousItemHeightVerticalRecyclerViewActivity::class.java
+                        MenuAdapter.Menu.VARIOUS_ITEM_WIDTH_HORIZONTAL_RECYCLER_VIEW -> VariousItemWidthHorizontalRecyclerViewActivity::class.java
                     }
                     startActivity(Intent(this@MainActivity, clazz))
                 }
