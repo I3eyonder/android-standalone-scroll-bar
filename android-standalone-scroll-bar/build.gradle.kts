@@ -1,12 +1,16 @@
+import com.android.build.api.dsl.LibraryExtension
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.maven.publish)
 }
 
-android {
+configure<LibraryExtension> {
     namespace = "com.hieupt.android.standalonescrollbar"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         minSdk = 17
@@ -28,16 +32,21 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = "17"
-    }
     publishing {
-        publishing {
-            singleVariant("release") {
-                withSourcesJar()
-                withJavadocJar()
-            }
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
         }
+    }
+}
+
+// Configure Kotlin compiler options using the new compilerOptions DSL (Kotlin Gradle Plugin 2.2+)
+// Replaces the deprecated kotlinOptions { jvmTarget = "17" }
+tasks.withType<KotlinCompile>().configureEach {
+    // Use the new compilerOptions DSL
+    compilerOptions {
+        // JvmTarget as a String can be provided by JvmTarget.fromTarget("17")
+        jvmTarget.set(JvmTarget.fromTarget("17"))
     }
 }
 
@@ -56,7 +65,14 @@ publishing {
             version = rootProject.extra["version_name"].toString()
 
             afterEvaluate {
-                from(components["release"])
+                val candidateNames = listOf("release", "androidRelease", "kotlin")
+                val component =
+                    candidateNames.firstNotNullOfOrNull { components.findByName(it) }
+                if (component != null) {
+                    from(component)
+                } else {
+                    throw GradleException("No publishable component found for project '${project.name}'. Searched: $candidateNames. Run './gradlew :${project.path}:tasks --all' to inspect available components.")
+                }
             }
         }
     }

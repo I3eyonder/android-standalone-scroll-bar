@@ -44,7 +44,7 @@ class DynamicVerticalRecyclerViewActivity :
     }
 
     class DynamicItemAdapter(
-        @LayoutRes private val layoutRes: Int = R.layout.item_text
+        @param:LayoutRes private val layoutRes: Int = R.layout.item_text
     ) : ListAdapter<String, DynamicItemAdapter.Holder>(object : DiffUtil.ItemCallback<String>() {
 
         override fun areItemsTheSame(oldItem: String, newItem: String): Boolean = oldItem == newItem
