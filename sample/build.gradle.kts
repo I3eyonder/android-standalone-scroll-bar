@@ -1,16 +1,20 @@
+import com.android.build.api.dsl.ApplicationExtension
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
 }
 
-android {
+configure<ApplicationExtension> {
     namespace = "com.hieupt.android.standalonescrollbar.sample"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.hieupt.android.standalonescrollbar.sample"
         minSdk = 21
-        targetSdk = 35
+        targetSdk = 36
         versionCode = rootProject.extra["version_code"] as Int
         versionName = rootProject.extra["version_name"].toString()
 
@@ -30,11 +34,15 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = "17"
-    }
     buildFeatures {
         viewBinding = true
+    }
+}
+
+// Configure Kotlin compiler options using the new compilerOptions DSL (Kotlin Gradle Plugin 2.2+)
+tasks.withType<KotlinCompile>().configureEach {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.fromTarget("17"))
     }
 }
 

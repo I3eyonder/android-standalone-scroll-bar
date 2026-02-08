@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
  */
 class ItemAdapter(
     private val count: Int,
-    @LayoutRes private val layoutRes: Int = R.layout.item_text
+    @param:LayoutRes private val layoutRes: Int = R.layout.item_text
 ) : RecyclerView.Adapter<ItemAdapter.Holder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder =
@@ -31,7 +31,7 @@ class ItemAdapter(
         fun bind() {
             val textView = itemView as? TextView
             textView?.apply {
-                text = "Item at position $adapterPosition"
+                text = "Item at position $bindingAdapterPosition"
                 setOnClickListener { }
             }
         }
