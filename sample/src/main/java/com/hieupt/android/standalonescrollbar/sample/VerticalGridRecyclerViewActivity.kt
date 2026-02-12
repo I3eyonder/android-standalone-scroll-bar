@@ -18,7 +18,21 @@ class VerticalGridRecyclerViewActivity :
         setupView {
             verticalRecyclerView.apply {
                 layoutManager = GridLayoutManager(context, 3)
-                adapter = ItemAdapter(100)
+                adapter = ListItemAdapter(
+                    buildList {
+                        repeat(100) {
+                            if (it == 20) {
+                                add("Item at position $it\n2nd line\n3rd line\n4th line\n5th line\n6th line\n7th line\n8th line\n9th line\n10th line\n11th line\n12th line\n13th line\n14th line\n15th line\n16th line\n17th line\n18th line\n19th line\n20th line")
+                            } else if (it % 3 == 0) {
+                                add("Item at position $it\n2nd line\n3rd line\n4th line\n5th line\n6th line")
+                            } else if (it % 3 == 1) {
+                                add("Item at position $it\n2nd line")
+                            } else {
+                                add("Item at position $it")
+                            }
+                        }
+                    }
+                )
             }
             verticalScrollbar.apply {
                 attachTo(verticalRecyclerView)
