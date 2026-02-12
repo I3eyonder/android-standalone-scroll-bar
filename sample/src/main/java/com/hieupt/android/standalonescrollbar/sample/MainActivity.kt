@@ -30,6 +30,8 @@ class MainActivity : BaseBindingActivity<ActivityMainBinding>() {
                         MenuAdapter.Menu.DYNAMIC_VERTICAL_RECYCLER_VIEW -> DynamicVerticalRecyclerViewActivity::class.java
                         MenuAdapter.Menu.VARIOUS_ITEM_HEIGHT_VERTICAL_RECYCLER_VIEW -> VariousItemHeightVerticalRecyclerViewActivity::class.java
                         MenuAdapter.Menu.VARIOUS_ITEM_WIDTH_HORIZONTAL_RECYCLER_VIEW -> VariousItemWidthHorizontalRecyclerViewActivity::class.java
+                        MenuAdapter.Menu.VARIOUS_ITEM_HEIGHT_VERTICAL_GRID_RECYCLER_VIEW -> VariousItemHeightVerticalGridRecyclerViewActivity::class.java
+                        MenuAdapter.Menu.VARIOUS_ITEM_WIDTH_HORIZONTAL_GRID_RECYCLER_VIEW -> VariousItemWidthHorizontalGridRecyclerViewActivity::class.java
                     }
                     startActivity(Intent(this@MainActivity, clazz))
                 }

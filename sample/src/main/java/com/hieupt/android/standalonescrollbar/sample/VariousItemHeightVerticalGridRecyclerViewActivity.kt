@@ -3,18 +3,19 @@ package com.hieupt.android.standalonescrollbar.sample
 import android.os.Bundle
 import android.view.LayoutInflater
 import androidx.recyclerview.widget.GridLayoutManager
+import com.hieupt.android.standalonescrollbar.StandaloneScrollBar
 import com.hieupt.android.standalonescrollbar.attachTo
-import com.hieupt.android.standalonescrollbar.sample.databinding.ActivityVerticalGridRecyclerViewBinding
+import com.hieupt.android.standalonescrollbar.sample.databinding.ActivityVariousItemHeightVerticalGridRecyclerViewBinding
 
-class VerticalGridRecyclerViewActivity :
-    BaseBindingActivity<ActivityVerticalGridRecyclerViewBinding>() {
+class VariousItemHeightVerticalGridRecyclerViewActivity :
+    BaseBindingActivity<ActivityVariousItemHeightVerticalGridRecyclerViewBinding>() {
 
-    override val viewBindingInflater: (LayoutInflater) -> ActivityVerticalGridRecyclerViewBinding
-        get() = ActivityVerticalGridRecyclerViewBinding::inflate
+    override val viewBindingInflater: (LayoutInflater) -> ActivityVariousItemHeightVerticalGridRecyclerViewBinding
+        get() = ActivityVariousItemHeightVerticalGridRecyclerViewBinding::inflate
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        title = "Vertical Grid Recycler View"
+        title = "Various Item Height Vertical Grid Recycler View"
         setupView {
             verticalRecyclerView.apply {
                 layoutManager = GridLayoutManager(context, 3)
@@ -35,9 +36,11 @@ class VerticalGridRecyclerViewActivity :
                 )
             }
             verticalScrollbar.apply {
+                delayBeforeAutoHide = StandaloneScrollBar.AUTO_HIDE_SCROLLBAR_DELAY_INFINITY_MILLIS
                 attachTo(verticalRecyclerView)
             }
             horizontalScrollbar.apply {
+                delayBeforeAutoHide = StandaloneScrollBar.AUTO_HIDE_SCROLLBAR_DELAY_ZERO_MILLIS
                 attachTo(verticalRecyclerView)
             }
         }

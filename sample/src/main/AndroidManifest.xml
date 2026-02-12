@@ -26,6 +26,8 @@
         <activity android:name="com.hieupt.android.standalonescrollbar.sample.DynamicVerticalRecyclerViewActivity" />
         <activity android:name="com.hieupt.android.standalonescrollbar.sample.VariousItemHeightVerticalRecyclerViewActivity" />
         <activity android:name="com.hieupt.android.standalonescrollbar.sample.VariousItemWidthHorizontalRecyclerViewActivity" />
+        <activity android:name="com.hieupt.android.standalonescrollbar.sample.VariousItemHeightVerticalGridRecyclerViewActivity" />
+        <activity android:name="com.hieupt.android.standalonescrollbar.sample.VariousItemWidthHorizontalGridRecyclerViewActivity" />
         <activity
             android:name="com.hieupt.android.standalonescrollbar.sample.MainActivity"
             android:exported="true">

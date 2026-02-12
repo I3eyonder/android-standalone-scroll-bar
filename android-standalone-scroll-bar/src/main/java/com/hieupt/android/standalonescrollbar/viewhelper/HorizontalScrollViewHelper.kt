@@ -1,10 +1,8 @@
 package com.hieupt.android.standalonescrollbar.viewhelper
 
-import android.annotation.SuppressLint
 import com.hieupt.android.standalonescrollbar.HorizontalScrollableView
 import com.hieupt.android.standalonescrollbar.ScrollableView
 import com.hieupt.android.standalonescrollbar.view.HorizontalScrollView2
-import com.hieupt.android.standalonescrollbar.view.ScrollView2
 
 /**
  * Created by HieuPT on 12/8/2020.
